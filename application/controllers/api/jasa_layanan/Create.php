@@ -27,7 +27,7 @@ class Create extends REST_Controller
             'updated_date' => date("0000:00:0:00:00"),
             'deleted_date' => date("0000:00:0:00:00"),
         ];
-        if ($this->jasa_layanan->createJasa_Layanan($data) > 0) {
+        if ($this->jasa_layanan->createJasaLayanan($data) > 0) {
             # code...
             $this->response([
                 'status' => true,

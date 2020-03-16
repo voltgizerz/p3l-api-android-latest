@@ -24,7 +24,7 @@ class Delete extends REST_Controller
 
             ], REST_Controller::HTTP_BAD_REQUEST);
         } else {
-            if ($this->Jasa_Layanan_model->deleteJasa_Layanan($id) > 0) {
+            if ($this->Jasa_Layanan_model->deleteJasaLayanan($id) > 0) {
                 //ok
 
                 $this->response([
