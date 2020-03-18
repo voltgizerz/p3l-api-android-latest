@@ -47,16 +47,15 @@ class Create extends REST_Controller
 
     public function response_upload()
     {
-        $this->load->helper(array('form', 'url'));
-
         $config = array(
+            'image_library'   => 'gd2',
             'upload_path' => "upload/gambar_produk/",
             'allowed_types' => "gif|jpg|png|jpeg",
             'overwrite' => true,
             'encrypt_name' => true,
-            'max_size' => "2048000",
-            'max_height' => "3000",
-            'max_width' => "3000",
+            'max_size' => "90000",
+            'max_height' => "5000",
+            'max_width' => "5000",
         );
 
         if (!file_exists('upload/gambar_produk/')) {
@@ -66,6 +65,8 @@ class Create extends REST_Controller
         $this->load->library('upload', $config);
 
         if ($this->upload->do_upload('gambar_produk')) {
+            $this->load->library('image_lib');
+            $this->image_lib->clear();
             $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
             $file_name = $upload_data['file_name'];
 
