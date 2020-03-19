@@ -15,14 +15,14 @@ class Update extends REST_Controller
         $this->load->model('Ukuran_Hewan_model');
     }
 
-    public function index_post($id_hewan = null)
+    public function index_post($id = null)
     {
         $ukuran_hewan = new UkuranHewanData();
         $ukuran_hewan->ukuran_hewan = $this->post('ukuran_hewan');
         $ukuran_hewan->updated_date = date("Y-m-d H:i:s");
         $ukuran_hewan->deleted_date = date("0000:00:0:00:00");
 
-        $response = $this->Ukuran_Hewan_model->updateUkuranHewan($ukuran_hewan, $id_ukuran_hewan);
+        $response = $this->Ukuran_Hewan_model->updateUkuranHewan($ukuran_hewan, $id);
 
         return $this->returnData($response['msg'], $response['error']);
     }
