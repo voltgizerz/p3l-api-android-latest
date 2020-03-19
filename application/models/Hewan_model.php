@@ -7,7 +7,14 @@ class Hewan_model extends CI_Model
     {
         if ($id_hewan === null) {
 
-            return $this->db->get('data_hewan')->result_array();
+            $this->db->select('id_hewan, nama_hewan, data_hewan.id_jenis_hewan, data_hewan.id_ukuran_hewan, data_hewan.id_customer, tanggal_lahir_hewan, data_hewan.created_date, data_hewan.updated_date, data_hewan.deleted_date,nama_customer, ukuran_hewan,nama_jenis_hewan');
+            $this->db->join('data_ukuran_hewan', 'data_ukuran_hewan.id_ukuran_hewan = data_hewan.id_ukuran_hewan');
+            $this->db->join('data_jenis_hewan', 'data_jenis_hewan.id_jenis_hewan = data_hewan.id_jenis_hewan');
+            $this->db->join('data_customer', 'data_customer.id_customer = data_hewan.id_customer');
+            $this->db->from('data_hewan');
+            $query = $this->db->get();
+
+            return $query->result_array();
             # code...
         } else {
 
