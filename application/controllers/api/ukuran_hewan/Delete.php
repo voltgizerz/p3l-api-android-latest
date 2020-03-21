@@ -24,7 +24,7 @@ class Delete extends REST_Controller
 
             ], REST_Controller::HTTP_BAD_REQUEST);
         } else {
-            if ($this->Hewan_model->deleteUkuranHewan($id_ukuran_hewan) > 0) {
+            if ($this->Ukuran_Hewan_model->deleteUkuranHewan($id_ukuran_hewan) > 0) {
                 //ok
 
                 $this->response([
