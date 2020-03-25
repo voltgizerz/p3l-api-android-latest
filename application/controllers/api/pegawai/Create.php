@@ -30,20 +30,36 @@ class Create extends REST_Controller
             'updated_date' => date("0000:00:0:00:00"),
             'deleted_date' => date("0000:00:0:00:00"),
         ];
-        if ($this->pegawai->createPegawai($data) > 0) {
-            # code...
-            $this->response([
-                'status' => true,
-                'message' => 'SUKSES PEGAWAI BERHASIL DI TAMBAHKAN !',
+        
+        // check username 
+        $user = $this->post('username');
 
-            ], REST_Controller::HTTP_CREATED);
-        } else {
-
+        $query = "SELECT username FROM data_pegawai WHERE username = '$user'";
+        $result = $this->db->query($query, $user);
+        if ($result->num_rows() >= 1) {
+    
             $this->response([
                 'status' => false,
-                'message' => 'GAGAL, MENAMBAHKAN PEGAWAI BARU !',
+                'message' => 'GAGAL, USERNAME SUDAH TERDAFTAR!',
 
             ], REST_Controller::HTTP_BAD_REQUEST);
+        } else {
+            if ($this->pegawai->createPegawai($data) > 0) {
+                # code...
+                $this->response([
+                    'status' => true,
+                    'message' => 'SUKSES PEGAWAI BERHASIL DI TAMBAHKAN !',
+    
+                ], REST_Controller::HTTP_CREATED);
+            } else {
+    
+                $this->response([
+                    'status' => false,
+                    'message' => 'GAGAL, MENAMBAHKAN PEGAWAI BARU !',
+    
+                ], REST_Controller::HTTP_BAD_REQUEST);
+            }
         }
+        
     }
 }
