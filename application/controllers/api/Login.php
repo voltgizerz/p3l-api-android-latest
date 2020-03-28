@@ -13,24 +13,28 @@ class Login extends REST_Controller
     {
         parent::__construct();
 
-        $this->load->model('Login_model','api');
+        $this->load->model('Login_model','login');
     }
 
     public function index_post()
     {
-
         $user = $this->post('username');
         $pass = $this->post('password');
         
-        $query = "SELECT username FROM data_pegawai WHERE username = '$user' && password = '$pass'";
-        $queryuser =  "SELECT username FROM data_pegawai WHERE username = '$user'";
-
+        $query = "SELECT * FROM data_pegawai WHERE username = '$user' && password = '$pass'";
+        $queryuser =  "SELECT * FROM data_pegawai WHERE username = '$user'";
+        
+        $this->db->select('*');
+        $this->db->where('username', $user);
+        $testing = $this->db->get('data_pegawai');
+        $row = $testing->row();
         $result = $this->db->query($query, $user);
         $resultuser = $this->db->query($queryuser, $user);
+        
     
 
         if ($resultuser->num_rows() >= 1 && $result->num_rows() < 1) {
-
+        
             $this->response([
                 'status' => false,
                 'message' => 'PASSWORD ANDA SALAH!',
@@ -44,10 +48,12 @@ class Login extends REST_Controller
 
             ], REST_Controller::HTTP_CREATED);
         } else if($result->num_rows() >= 1){
-            
+        
+          
             $this->response([
                 'status' => true,
                 'message' => 'SUKSES, LOGIN PEGAWAI!',
+                'data'=>  array('id_pegawai'=>$row->id_pegawai,'nama_pegawai'=>$row->nama_pegawai,'role_pegawai'=>$row->role_pegawai)
 
             ], REST_Controller::HTTP_CREATED);
         } else {
