@@ -28,6 +28,7 @@ class Login extends REST_Controller
         $this->db->where('username', $user);
         $testing = $this->db->get('data_pegawai');
         $row = $testing->row();
+        
         $result = $this->db->query($query, $user);
         $resultuser = $this->db->query($queryuser, $user);
         
@@ -49,11 +50,13 @@ class Login extends REST_Controller
             ], REST_Controller::HTTP_CREATED);
         } else if($result->num_rows() >= 1){
         
+            $arr = array('id_pegawai'=>$row->id_pegawai,'nama_pegawai'=>$row->nama_pegawai,'role_pegawai'=>$row->role_pegawai);
           
+            
             $this->response([
                 'status' => true,
                 'message' => 'SUKSES, LOGIN PEGAWAI!',
-                'data'=>  array('id_pegawai'=>$row->id_pegawai,'nama_pegawai'=>$row->nama_pegawai,'role_pegawai'=>$row->role_pegawai)
+                'data'=> $arr
 
             ], REST_Controller::HTTP_CREATED);
         } else {
