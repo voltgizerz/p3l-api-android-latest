@@ -21,13 +21,13 @@ class Login extends REST_Controller
         $user = $this->post('username');
         $pass = $this->post('password');
         
-        $query = "SELECT * FROM data_pegawai WHERE username = '$user' && password = '$pass'";
-        $queryuser =  "SELECT * FROM data_pegawai WHERE username = '$user'";
+        $query = "SELECT * FROM data_pegawai WHERE BINARY username = '$user' && BINARY password = '$pass'";
+        $queryuser =  "SELECT * FROM data_pegawai WHERE BINARY username = '$user'";
         
         $this->db->select('*');
         $this->db->where('username', $user);
         $testing = $this->db->get('data_pegawai');
-        $row = $testing->row();
+    
         
         $result = $this->db->query($query, $user);
         $resultuser = $this->db->query($queryuser, $user);
@@ -50,7 +50,7 @@ class Login extends REST_Controller
             ], REST_Controller::HTTP_CREATED);
         } else if($result->num_rows() >= 1){
         
-            $arr = $this->login->getLoginInfo($user);
+            $arr = $this->login->getLoginInfo($user,$pass);
           
             
             $this->response([
