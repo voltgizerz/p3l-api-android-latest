@@ -50,7 +50,7 @@ class Login extends REST_Controller
             ], REST_Controller::HTTP_CREATED);
         } else if($result->num_rows() >= 1){
         
-            $arr = array('id_pegawai'=>$row->id_pegawai,'nama_pegawai'=>$row->nama_pegawai,'role_pegawai'=>$row->role_pegawai);
+            $arr = $this->login->getLoginInfo($user);
           
             
             $this->response([
