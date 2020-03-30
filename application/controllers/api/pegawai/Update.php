@@ -27,17 +27,27 @@ class Update extends REST_Controller
         $pegawai->password = password_hash($this->post('password'),PASSWORD_DEFAULT);
         $pegawai->updated_date = date("Y-m-d H:i:s");
         $pegawai->deleted_date = date("0000:00:0:00:00");
-
         $response = $this->Pegawai_model->updatePegawai($pegawai, $id);
 
         return $this->returnData($response['msg'], $response['error']);
     }
-
+    
     public function returnData($msg, $error)
     {
+        $pegawai = new UserData();
+        $pegawai->username = $this->post('username');
+        $cekUser = "SELECT username FROM data_pegawai WHERE username = '$pegawai->username'";
+        $result = $this->db->query($cekUser, $pegawai->username);
+        if($result->num_rows() >= 1)
+        {
+            $response['error'] = true;
+            $response['message'] = "Username Sudah Terdaftar!";
+            return $this->response($response);
+        }else{
         $response['error'] = $error;
         $response['message'] = $msg;
         return $this->response($response);
+        }
     }
 }
 class UserData
