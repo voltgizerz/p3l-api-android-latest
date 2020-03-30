@@ -18,6 +18,7 @@ class Create extends REST_Controller
 
     public function index_post()
     {
+
         $data = [
             'nama_pegawai' => $this->post('nama_pegawai'),
             'alamat_pegawai' => $this->post('alamat_pegawai'),
@@ -25,7 +26,7 @@ class Create extends REST_Controller
             'nomor_hp_pegawai' => $this->post('nomor_hp_pegawai'),
             'role_pegawai' => $this->post('role_pegawai'),
             'username' => $this->post('username'),
-            'password' => $this->post('password'),
+            'password' => password_hash($this->post('password'),PASSWORD_DEFAULT),
             'created_date' => date("Y-m-d H:i:s"),
             'updated_date' => date("0000:00:0:00:00"),
             'deleted_date' => date("0000:00:0:00:00"),
