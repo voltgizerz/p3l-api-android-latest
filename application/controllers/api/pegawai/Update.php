@@ -34,20 +34,9 @@ class Update extends REST_Controller
     
     public function returnData($msg, $error)
     {
-        $pegawai = new UserData();
-        $pegawai->username = $this->post('username');
-        $cekUser = "SELECT username FROM data_pegawai WHERE username = '$pegawai->username'";
-        $result = $this->db->query($cekUser, $pegawai->username);
-        if($result->num_rows() >= 1)
-        {
-            $response['error'] = true;
-            $response['message'] = "Username Sudah Terdaftar!";
-            return $this->response($response);
-        }else{
         $response['error'] = $error;
         $response['message'] = $msg;
         return $this->response($response);
-        }
     }
 }
 class UserData

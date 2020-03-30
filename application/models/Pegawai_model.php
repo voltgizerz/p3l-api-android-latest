@@ -40,10 +40,17 @@ class Pegawai_model extends CI_Model
             'updated_date' => $request->updated_date,
             'deleted_date' => $request->deleted_date,
         ];
-
-        if ($this->db->where('id_pegawai', $id)->update('data_pegawai', $updateData)) {
-            return ['msg' => 'Berhasil Update Pegawai', 'error' => false];
+        $cekID = $this->db->query("SELECT username FROM data_pegawai WHERE username ='$request->username' && id_pegawai != '$id'");
+        if($cekID->num_rows() >= 1){
+            //USERNAME SUDAH TERDAFTAR
+                return ['msg' => 'Gagal, Username sudah Terdaftar!', 'error' => true];
+        }else{
+            //USERNAME BELUM TERDAFTAR
+            if ($this->db->where('id_pegawai', $id)->update('data_pegawai', $updateData)) {
+                return ['msg' => 'Berhasil Update Pegawai', 'error' => false];
+            }
         }
+
         return ['msg' => 'Gagal Update Pegawai', 'error' => true];
     }
 
