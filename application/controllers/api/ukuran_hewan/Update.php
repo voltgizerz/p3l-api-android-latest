@@ -17,6 +17,7 @@ class Update extends REST_Controller
 
     public function index_post($id = null)
     {
+        date_default_timezone_set("Asia/Bangkok");
         $ukuran_hewan = new UkuranHewanData();
         $ukuran_hewan->ukuran_hewan = $this->post('ukuran_hewan');
         $ukuran_hewan->updated_date = date("Y-m-d H:i:s");

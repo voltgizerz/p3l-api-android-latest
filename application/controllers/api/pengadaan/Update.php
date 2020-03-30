@@ -17,6 +17,7 @@ class Update extends REST_Controller
 
     public function index_post($id = null)
     {
+        date_default_timezone_set("Asia/Bangkok");
         $pengadaan = new UserData();
         $pengadaan->kode_pengadaan = $this->post('kode_pengadaan');
         $pengadaan->status = $this->post('status');

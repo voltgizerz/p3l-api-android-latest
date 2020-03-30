@@ -18,6 +18,7 @@ class Create extends REST_Controller
 
     public function index_post()
     {
+        date_default_timezone_set("Asia/Bangkok");
         $data = [
             'nama_jasa_layanan' => $this->post('nama_jasa_layanan'),
             'harga_jasa_layanan' => $this->post('harga_jasa_layanan'),

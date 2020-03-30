@@ -17,6 +17,7 @@ class Update extends REST_Controller
 
     public function index_post($id = null)
     {
+        date_default_timezone_set("Asia/Bangkok");
         $jenis_hewan = new UserData();
         $jenis_hewan->nama_jenis_hewan = $this->post('nama_jenis_hewan');
         $jenis_hewan->created_date = date("Y-m-d H:i:s");

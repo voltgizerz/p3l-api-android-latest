@@ -17,6 +17,7 @@ class Update extends REST_Controller
 
     public function index_post($id_hewan = null)
     {
+        date_default_timezone_set("Asia/Bangkok");
         $hewan = new HewanData();
         $hewan->nama_hewan = $this->post('nama_hewan');
         $hewan->id_jenis_hewan = $this->post('id_jenis_hewan');
