@@ -48,34 +48,32 @@ class Create extends REST_Controller
 
     public function response_upload()
     {
-
-        $config = array(
-            'image_library'   => 'gd2',
-            'upload_path' => "upload/gambar_produk/",
-            'allowed_types' => "gif|jpg|png|jpeg",
-            'overwrite' => true,
-            'encrypt_name' => true,
-            'max_size' => "90000",
-            'max_height' => "5000",
-            'max_width' => "5000",
-        );
-
-        if (!file_exists('upload/gambar_produk/')) {
-            mkdir('upload/gambar_produk/', 0777, true);
+        $part = "upload/gambar_produk/";
+	    $filename = "img".rand(9,9999).".jpg";
+	    
+	    if (!file_exists('upload/gambar/')) {
+            mkdir('upload/gambar/', 777, true);
         }
+        
+         
+       if ($_FILES["gambar_produk"]["name"] != "") 
+       {
+          
+            $destinationfile = $part.$filename;
+			if(move_uploaded_file($_FILES['gambar_produk']['tmp_name'],  $destinationfile))
+			{
+                return $destinationfile;
+			}else
+			{
+			    // gagal upload
+			    return 'upload/gambar_produk/default.jpg' ;
+			}
 
-        $this->load->library('upload', $config);
-
-        if ($this->upload->do_upload('gambar_produk')) {
-            $this->load->library('image_lib');
-            $this->image_lib->clear();
-            $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
-            $file_name = $upload_data['file_name'];
-
-            $dir_img = "upload/gambar_produk/" . $file_name;
-            return $dir_img;
-        } else {
-            return 'upload/gambar_produk/default.jpg';
+        } 
+        else 
+        {
+            //file upload tidak ada
+           return 'upload/gambar_produk/default.jpg' ;
         }
     }
 }
