@@ -25,7 +25,7 @@ class Update extends REST_Controller
         $supplier->updated_date = date("Y-m-d H:i:s");
         $supplier->deleted_date = date("0000:00:0:00:00");
 
-        $response = $this->Supplier_model->updateCustomer($supplier, $id);
+        $response = $this->Supplier_model->updateSupplier($supplier, $id);
 
         return $this->returnData($response['msg'], $response['error']);
     }

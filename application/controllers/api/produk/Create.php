@@ -48,6 +48,7 @@ class Create extends REST_Controller
 
     public function response_upload()
     {
+
         $config = array(
             'image_library'   => 'gd2',
             'upload_path' => "upload/gambar_produk/",
