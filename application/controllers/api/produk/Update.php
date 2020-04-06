@@ -44,6 +44,10 @@ class Update extends REST_Controller
             mkdir('upload/gambar/', 777, true);
         }
         
+        if($this->Produk_model->cekGambar($id) != 1){
+            unlink(FCPATH.$this->Produk_model->cekGambar($id));
+        }
+        
          
        if ($_FILES["gambar_produk"]["name"] != "") 
        {
