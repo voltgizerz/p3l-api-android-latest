@@ -56,4 +56,24 @@ class Produk_model extends CI_Model
             return ['msg' => 'Data Tidak Ditemukan', 'error' => true];
         }
     }
+
+    public function cekGambar($id)
+    {
+        $this->id = $id;
+        $query = "SELECT * FROM data_produk WHERE id_produk = $id &&  gambar_produk='upload/gambar_produk/default.jpg'";
+        $result = $this->db->query($query, $this->id); 
+
+        $this->db->select('gambar_produk');
+        $this->db->from('data_produk');
+        $this->db->where('id_produk',$id);
+     
+        $gambar = $this->db->get()->row('gambar_produk');
+        
+        if ($result->num_rows() == 1) {
+            return 1;
+        } else {
+            return $gambar;
+        }
+        
+    }
 }
