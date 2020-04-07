@@ -7,19 +7,22 @@ class Pengadaan_model extends CI_Model
     {
         if ($id === null) {
 
-            $this->db->select('data_detail_pengadaan.kode_pengadaan_fk,data_detail_pengadaan.id_produk_fk,data_detail_pengadaan.satuan_pengadaan,data_detail_pengadaan.jumlah_pengadaan');
-            $this->db->join('data_pengadaan', 'data_pengadaan.kode_pengadaan = data_detail_pengadaan.kode_pengadaan_fk');
-            $this->db->from('data_detail_pengadaan');
+           
 
-            $queryDetail = $this->db->get();
-            $arrTempDetail = $queryDetail->result_array();
-
-            $this->db->select('kode_pengadaan,id_supplier,status,tanggal_pengadaan,total');
+            $this->db->select('kode_pengadaan,id_supplier,status as status_pengadaan,tanggal_pengadaan,total AS total_pengadaan');
             $this->db->from('data_pengadaan');
             $query = $this->db->get();
             $arrTemp = $query->result_array();
 
             for ($i =0; $i < count($arrTemp); $i++) {
+
+                $this->db->select('data_detail_pengadaan.kode_pengadaan_fk,data_detail_pengadaan.id_produk_fk,data_detail_pengadaan.satuan_pengadaan,data_detail_pengadaan.jumlah_pengadaan');
+                $this->db->join('data_pengadaan', 'data_pengadaan.kode_pengadaan = data_detail_pengadaan.kode_pengadaan_fk');
+                $this->db->from('data_detail_pengadaan');
+                $this->db->where('data_detail_pengadaan.kode_pengadaan_fk',$arrTemp[$i]['kode_pengadaan']);
+                $queryDetail = $this->db->get();
+                $arrTempDetail = $queryDetail->result_array();
+                
                 $arrTemp[$i]['produk_dibeli'] = $arrTempDetail;
             }
 
