@@ -15,8 +15,6 @@ class Update extends REST_Controller
         $this->load->model('Produk_model');
     }
 
-  
-
     public function index_post($id = null)
     {
         date_default_timezone_set("Asia/Bangkok");
@@ -38,44 +36,36 @@ class Update extends REST_Controller
     public function response_upload($id)
     {
         $part = "upload/gambar_produk/";
-	    $filename = "img".rand(9,9999).".jpg";
-	    
-	    if (!file_exists('upload/gambar/')) {
+        $filename = "img" . rand(9, 9999) . ".jpg";
+
+        if (!file_exists('upload/gambar/')) {
             mkdir('upload/gambar/', 777, true);
         }
-        
-        if($this->Produk_model->cekGambar($id) != 1){
-            unlink(FCPATH.$this->Produk_model->cekGambar($id));
-        }
-        
-         
-       if ($_FILES["gambar_produk"]["name"] != "") 
-       {
-          
-            $destinationfile = $part.$filename;
-			if(move_uploaded_file($_FILES['gambar_produk']['tmp_name'],  $destinationfile))
-			{
-                return $destinationfile;
-			}else
-			{
-			    // gagal upload
-			    return 'upload/gambar_produk/default.jpg' ;
-			}
 
-        } 
-        else 
-        {
-            //FILE TIDAK ADA DI UPLOAD
-            if($this->Produk_model->cekGambar($id) == 1){
+        if ($_FILES["gambar_produk"]["name"] != "") {
+            if ($this->Produk_model->cekGambar($id) != 1) {
+                unlink(FCPATH . $this->Produk_model->cekGambar($id));
+            }
+
+            $destinationfile = $part . $filename;
+            if (move_uploaded_file($_FILES['gambar_produk']['tmp_name'], $destinationfile)) {
+                return $destinationfile;
+            } else {
+                // gagal upload
                 return 'upload/gambar_produk/default.jpg';
-            }else{
-                
+            }
+
+        } else {
+            //FILE TIDAK ADA DI UPLOAD
+            if ($this->Produk_model->cekGambar($id) == 1) {
+                return 'upload/gambar_produk/default.jpg';
+            } else {
+
                 return $this->Produk_model->cekGambar($id);
             }
-         ;
+            ;
         }
     }
-
 
     public function returnData($msg, $error)
     {
