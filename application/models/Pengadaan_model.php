@@ -9,7 +9,8 @@ class Pengadaan_model extends CI_Model
 
            
 
-            $this->db->select('kode_pengadaan,id_supplier,status as status_pengadaan,tanggal_pengadaan,total AS total_pengadaan');
+            $this->db->select('data_pengadaan.kode_pengadaan,data_pengadaan.id_supplier,data_supplier.nama_supplier,data_pengadaan.status as status_pengadaan,data_pengadaan.tanggal_pengadaan,data_pengadaan.total AS total_pengadaan');
+             $this->db->join('data_supplier', 'data_supplier.id_supplier = data_pengadaan.id_supplier');
             $this->db->from('data_pengadaan');
             $query = $this->db->get();
             $arrTemp = $query->result_array();
@@ -18,6 +19,7 @@ class Pengadaan_model extends CI_Model
 
                 $this->db->select('data_detail_pengadaan.kode_pengadaan_fk,data_detail_pengadaan.id_produk_fk,data_detail_pengadaan.satuan_pengadaan,data_detail_pengadaan.jumlah_pengadaan');
                 $this->db->join('data_pengadaan', 'data_pengadaan.kode_pengadaan = data_detail_pengadaan.kode_pengadaan_fk');
+                $this->db->join('data_supplier', 'data_supplier.id_supplier = data_pengadaan.id_supplier');
                 $this->db->from('data_detail_pengadaan');
                 $this->db->where('data_detail_pengadaan.kode_pengadaan_fk',$arrTemp[$i]['kode_pengadaan']);
                 $queryDetail = $this->db->get();
