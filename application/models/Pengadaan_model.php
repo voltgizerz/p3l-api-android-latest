@@ -53,7 +53,7 @@ class Pengadaan_model extends CI_Model
             ['kode_pengadaan' => $request->kode_pengadaan,
             'id_supplier' => $request->id_supplier,
             'status' => $request->status,
-            'tanggal_pengadaan' => $request->tanggal_pengadaan,
+            'tanggal_pengadaan' => date("Y-m-d H:i:s"),
             'total' => $request->total,
         ];
 
@@ -83,5 +83,19 @@ class Pengadaan_model extends CI_Model
         $bln = date('m');
         $thn = date('Y');
         return ("PO-".$thn."-".$bln."-".$hari."-0".$result[0]->Auto_increment);
+    }
+
+    public function totalBayarPengadaan($kode){
+        $this->db->select('data_detail_pengadaan.id_produk_fk,data_detail_pengadaan.jumlah_pengadaan,data_produk.harga_produk');
+        $this->db->join('data_produk', 'data_produk.id_produk = data_detail_pengadaan.id_produk_fk');
+        $this->db->where('data_detail_pengadaan.kode_pengadaan_fk', 'PO-2020-02-02-01');
+        $this->db->from('data_detail_pengadaan');
+        $query = $this->db->get();
+        $arrTemp = json_decode(json_encode($query->result()), true);
+        $temp = 0;
+        for ($i = 0; $i < count($arrTemp); $i++) {
+            $temp = $temp + $arrTemp[$i]['jumlah_pengadaan']*$arrTemp[$i]['harga_produk'];
+        }
+        return $temp;
     }
 }
