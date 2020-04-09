@@ -75,17 +75,23 @@ class Pengadaan_model extends CI_Model
         }
     }
 
-    public function ambilKode(){
+    public function ambilKode()
+    {
         date_default_timezone_set("Asia/Bangkok");
         $query = "SHOW TABLE STATUS LIKE 'data_pengadaan'";
         $result = $this->db->query($query)->result();
         $hari = date('d');
         $bln = date('m');
         $thn = date('Y');
-        return ("PO-".$thn."-".$bln."-".$hari."-0".$result[0]->Auto_increment);
+        if ($result[0]->Auto_increment > 9) {
+            return ("PO-" . $thn . "-" . $bln . "-" . $hari . "-" . $result[0]->Auto_increment);
+        } else {
+            return ("PO-" . $thn . "-" . $bln . "-" . $hari . "-0" . $result[0]->Auto_increment);
+        }
     }
 
-    public function totalBayarPengadaan($kode){
+    public function totalBayarPengadaan($kode)
+    {
         $this->db->select('data_detail_pengadaan.id_produk_fk,data_detail_pengadaan.jumlah_pengadaan,data_produk.harga_produk');
         $this->db->join('data_produk', 'data_produk.id_produk = data_detail_pengadaan.id_produk_fk');
         $this->db->where('data_detail_pengadaan.kode_pengadaan_fk', 'PO-2020-02-02-01');
@@ -94,7 +100,7 @@ class Pengadaan_model extends CI_Model
         $arrTemp = json_decode(json_encode($query->result()), true);
         $temp = 0;
         for ($i = 0; $i < count($arrTemp); $i++) {
-            $temp = $temp + $arrTemp[$i]['jumlah_pengadaan']*$arrTemp[$i]['harga_produk'];
+            $temp = $temp + $arrTemp[$i]['jumlah_pengadaan'] * $arrTemp[$i]['harga_produk'];
         }
         return $temp;
     }
