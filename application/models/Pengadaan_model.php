@@ -7,24 +7,22 @@ class Pengadaan_model extends CI_Model
     {
         if ($id === null) {
 
-           
-
             $this->db->select('data_pengadaan.kode_pengadaan,data_pengadaan.id_supplier,data_supplier.nama_supplier,data_pengadaan.status as status_pengadaan,data_pengadaan.tanggal_pengadaan,data_pengadaan.total AS total_pengadaan');
-             $this->db->join('data_supplier', 'data_supplier.id_supplier = data_pengadaan.id_supplier');
+            $this->db->join('data_supplier', 'data_supplier.id_supplier = data_pengadaan.id_supplier');
             $this->db->from('data_pengadaan');
             $query = $this->db->get();
             $arrTemp = $query->result_array();
 
-            for ($i =0; $i < count($arrTemp); $i++) {
+            for ($i = 0; $i < count($arrTemp); $i++) {
 
                 $this->db->select('data_detail_pengadaan.kode_pengadaan_fk,data_detail_pengadaan.id_produk_fk,data_detail_pengadaan.satuan_pengadaan,data_detail_pengadaan.jumlah_pengadaan');
                 $this->db->join('data_pengadaan', 'data_pengadaan.kode_pengadaan = data_detail_pengadaan.kode_pengadaan_fk');
                 $this->db->join('data_supplier', 'data_supplier.id_supplier = data_pengadaan.id_supplier');
                 $this->db->from('data_detail_pengadaan');
-                $this->db->where('data_detail_pengadaan.kode_pengadaan_fk',$arrTemp[$i]['kode_pengadaan']);
+                $this->db->where('data_detail_pengadaan.kode_pengadaan_fk', $arrTemp[$i]['kode_pengadaan']);
                 $queryDetail = $this->db->get();
                 $arrTempDetail = $queryDetail->result_array();
-                
+
                 $arrTemp[$i]['produk_dibeli'] = $arrTempDetail;
             }
 
@@ -75,5 +73,15 @@ class Pengadaan_model extends CI_Model
         } else {
             return ['msg' => 'Data pengadaan Tidak Ditemukan', 'error' => true];
         }
+    }
+
+    public function ambilKode(){
+        date_default_timezone_set("Asia/Bangkok");
+        $query = "SHOW TABLE STATUS LIKE 'data_pengadaan'";
+        $result = $this->db->query($query)->result();
+        $hari = date('d');
+        $bln = date('m');
+        $thn = date('Y');
+        return ("PO-".$thn."-".$bln."-".$hari."-0".$result[0]->Auto_increment);
     }
 }

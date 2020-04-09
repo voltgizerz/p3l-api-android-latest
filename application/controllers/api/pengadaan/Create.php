@@ -20,7 +20,8 @@ class Create extends REST_Controller
     {
         date_default_timezone_set("Asia/Bangkok");
         $data = [
-            'kode_pengadaan' => $this->post('kode_pengadaan'),
+            'kode_pengadaan' => $this->pengadaan->ambilKode(),
+            'id_supplier' => $this->post('id_supplier'),
             'status' => $this->post('status'),
             'tanggal_pengadaan' => $this->post('tanggal_pengadaan'),
             'total' => $this->post('total'),
