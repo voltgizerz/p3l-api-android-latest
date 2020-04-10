@@ -27,7 +27,7 @@ class Delete extends REST_Controller
             $kodePengadaan = [
                 'kode_pengadaan_fk' => $this->post('kode_pengadaan_fk'),
             ];
-            if ($this->Pengadaan_detail_model->deletePengadaan($kodePengadaan,$id) > 0) {
+            if ($this->Pengadaan_detail_model->deletePengadaanDetail($kodePengadaan,$id) > 0) {
                 //ok
 
                 $this->response([

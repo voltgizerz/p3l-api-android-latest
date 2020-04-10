@@ -23,7 +23,7 @@ class Pengadaan_detail_model extends CI_Model
         }
     }
 
-    public function deletePengadaan($PengadaanDetail,$id)
+    public function deletePengadaanDetail($PengadaanDetail,$id)
     {
         $this->db->delete('data_detail_pengadaan', ['id_detail_pengadaan' => $id]);
         $rowdelete = $this->db->affected_rows();
@@ -45,7 +45,7 @@ class Pengadaan_detail_model extends CI_Model
         return $rowdelete;
 
     }
-    public function createPengadaan($data)
+    public function createPengadaanDetail($data)
     {
         //MASUKAN DATA NYA BOS
         $this->db->insert('data_detail_pengadaan', $data);

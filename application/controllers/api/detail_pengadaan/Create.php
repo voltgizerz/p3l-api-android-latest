@@ -26,7 +26,7 @@ class Create extends REST_Controller
             'jumlah_pengadaan' => $this->post('jumlah_pengadaan'),
             'tanggal_pengadaan' => date("Y-m-d H:i:s"),
         ];
-        if ($this->pengadaan->createPengadaan($data) > 0) {
+        if ($this->pengadaan->createPengadaanDetail($data) > 0) {
             # code...
             $this->response([
                 'status' => true,
