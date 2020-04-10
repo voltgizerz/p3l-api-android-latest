@@ -20,10 +20,11 @@ class Create extends REST_Controller
     {
         date_default_timezone_set("Asia/Bangkok");
         $data = [
-            'kode_pengadaan' => $this->post('kode_pengadaan'),
-            'status' => $this->post('status'),
-            'tanggal_pengadaan' => $this->post('tanggal_pengadaan'),
-            'total' => $this->post('total'),
+            'id_produk_fk' => $this->post('id_produk_fk'),
+            'kode_pengadaan_fk' => $this->post('kode_pengadaan_fk'),
+            'satuan_pengadaan' => $this->post('satuan_pengadaan'),
+            'jumlah_pengadaan' => $this->post('jumlah_pengadaan'),
+            'tanggal_pengadaan' =>  date("Y-m-d H:i:s")
         ];
         if ($this->pengadaan->createPengadaan($data) > 0) {
             # code...

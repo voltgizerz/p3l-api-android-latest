@@ -7,9 +7,7 @@ class Pengadaan_detail_model extends CI_Model
     {
         if ($id === null) {
 
-           
-
-            $this->db->select('data_detail_pengadaan.id_produk_fk,data_produk.nama_produk,data_detail_pengadaan.kode_pengadaan_fk,data_detail_pengadaan.satuan_pengadaan,data_detail_pengadaan.jumlah_pengadaan,data_detail_pengadaan.tanggal_pengadaan');
+            $this->db->select('data_detail_pengadaan.id_detail_pengadaan,data_detail_pengadaan.id_produk_fk,data_produk.nama_produk,data_detail_pengadaan.kode_pengadaan_fk,data_detail_pengadaan.satuan_pengadaan,data_detail_pengadaan.jumlah_pengadaan,data_detail_pengadaan.tanggal_pengadaan');
             $this->db->join('data_produk', 'data_produk.id_produk = data_detail_pengadaan.id_produk_fk');
             $this->db->from('data_detail_pengadaan');
             $query = $this->db->get();
@@ -29,10 +27,27 @@ class Pengadaan_detail_model extends CI_Model
     {
         $this->db->delete('data_pengadaan', ['kode_pengadaan' => $id]);
         return $this->db->affected_rows();
+        
     }
     public function createPengadaan($data)
     {
-        $this->db->insert('data_pengadaan', $data);
+        //MASUKAN DATA NYA BOS
+        $this->db->insert('data_detail_pengadaan', $data);
+        //CARI NILAI TOTAL HARGA UPDATE
+        $this->db->select('data_detail_pengadaan.id_produk_fk,data_detail_pengadaan.jumlah_pengadaan,data_produk.harga_produk');
+        $this->db->join('data_produk', 'data_produk.id_produk = data_detail_pengadaan.id_produk_fk');
+        $this->db->where('data_detail_pengadaan.kode_pengadaan_fk',  $data['kode_pengadaan_fk']);
+        $this->db->from('data_detail_pengadaan');
+        $query = $this->db->get();
+        $arrTemp = json_decode(json_encode($query->result()), true);
+        // NILAI TAMPUNG TOTAL HARGA YANG BARU
+        $temp = 0;
+        for ($i = 0; $i < count($arrTemp); $i++) {
+            $temp = $temp + $arrTemp[$i]['jumlah_pengadaan'] * $arrTemp[$i]['harga_produk'];
+        }
+        //UPDATE NILAI TOTAL PENGADAAN 
+        $this->db->where('kode_pengadaan', $data['kode_pengadaan_fk'])->update('data_pengadaan',['total' => $temp]);
+        
         return $this->db->affected_rows();
     }
 
