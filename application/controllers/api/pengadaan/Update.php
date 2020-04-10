@@ -19,10 +19,9 @@ class Update extends REST_Controller
     {
         date_default_timezone_set("Asia/Bangkok");
         $pengadaan = new UserData();
-        $pengadaan->kode_pengadaan = $this->post('kode_pengadaan');
+        $pengadaan->id_supplier = $this->post('id_supplier');
         $pengadaan->status = $this->post('status');
-        $pengadaan->tanggal_pengadaan = $this->post('tanggal_pengadaan');
-        $pengadaan->total = $this->post('total');
+
 
         $response = $this->Pengadaan_model->updatePengadaan($pengadaan, $id);
 

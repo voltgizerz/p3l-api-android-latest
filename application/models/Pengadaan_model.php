@@ -38,7 +38,7 @@ class Pengadaan_model extends CI_Model
 
     public function deletePengadaan($id)
     {
-        $this->db->delete('data_pengadaan', ['kode_pengadaan' => $id]);
+        $this->db->delete('data_pengadaan', ['id_pengadaan' => $id]);
         return $this->db->affected_rows();
     }
     public function createPengadaan($data)
@@ -50,14 +50,12 @@ class Pengadaan_model extends CI_Model
     public function updatePengadaan($request, $id)
     {
         $updateData =
-            ['kode_pengadaan' => $request->kode_pengadaan,
+            [
             'id_supplier' => $request->id_supplier,
             'status' => $request->status,
-            'tanggal_pengadaan' => date("Y-m-d H:i:s"),
-            'total' => $request->total,
         ];
 
-        if ($this->db->where('kode_pengadaan', $id)->update('data_pengadaan', $updateData)) {
+        if ($this->db->where('id_pengadaan', $id)->update('data_pengadaan', $updateData)) {
             return ['msg' => 'Berhasil Update pengadaan', 'error' => false];
         }
         return ['msg' => 'Gagal Update pengadaan', 'error' => true];

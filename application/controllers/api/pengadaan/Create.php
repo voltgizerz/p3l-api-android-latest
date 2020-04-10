@@ -22,7 +22,7 @@ class Create extends REST_Controller
         $data = [
             'kode_pengadaan' => $this->pengadaan->ambilKode(),
             'id_supplier' => $this->post('id_supplier'),
-            'status' => $this->post('status'),
+            'status' => $this->post('Belum Diterima'),
             'tanggal_pengadaan' => date("Y-m-d H:i:s"),
             'total' => $this->pengadaan->totalBayarPengadaan($this->pengadaan->ambilKode()),
         ];
