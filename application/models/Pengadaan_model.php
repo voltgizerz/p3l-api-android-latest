@@ -92,7 +92,7 @@ class Pengadaan_model extends CI_Model
     {
         $this->db->select('data_detail_pengadaan.id_produk_fk,data_detail_pengadaan.jumlah_pengadaan,data_produk.harga_produk');
         $this->db->join('data_produk', 'data_produk.id_produk = data_detail_pengadaan.id_produk_fk');
-        $this->db->where('data_detail_pengadaan.kode_pengadaan_fk', 'PO-2020-02-02-01');
+        $this->db->where('data_detail_pengadaan.kode_pengadaan_fk', $kode);
         $this->db->from('data_detail_pengadaan');
         $query = $this->db->get();
         $arrTemp = json_decode(json_encode($query->result()), true);
