@@ -36,8 +36,9 @@ class Pengadaan_model extends CI_Model
         }
     }
 
-    public function deletePengadaan($id)
+    public function deletePengadaan($id,$kodePengadaan)
     {
+        $this->db->delete('data_detail_pengadaan', ['kode_pengadaan_fk' => $kodePengadaan['kode_pengadaan']]);
         $this->db->delete('data_pengadaan', ['id_pengadaan' => $id]);
         return $this->db->affected_rows();
     }

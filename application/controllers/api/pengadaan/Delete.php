@@ -24,7 +24,10 @@ class Delete extends REST_Controller
 
             ], REST_Controller::HTTP_BAD_REQUEST);
         } else {
-            if ($this->Pengadaan_model->deletePengadaan($id) > 0) {
+            $kodePengadaan = [
+                'kode_pengadaan' => $this->post('kode_pengadaan'),
+            ];
+            if ($this->Pengadaan_model->deletePengadaan($id,$kodePengadaan) > 0) {
                 //ok
 
                 $this->response([
