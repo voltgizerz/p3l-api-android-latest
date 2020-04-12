@@ -33,13 +33,19 @@ class Delete extends REST_Controller
                     'message' => 'delete pegawai Sukses',
                 ], REST_Controller::HTTP_CREATED);
                 # code...
-            } else {
+            } else if ($this->Pegawai_model->deletePegawai($id) == 0) {
                 ////id not found
                 $this->response([
                     'status' => false,
                     'message' => 'id tidak ada',
 
                 ], REST_Controller::HTTP_BAD_REQUEST);
+            } else if  ($this->Pegawai_model->deletePegawai($id) == -1) {
+                // ada foreign key
+                $this->response([
+                    'status' => false,
+                    'message' => 'DATA INI SEDANG DIGUNAKAN!',
+                ], REST_Controller::HTTP_CREATED);
             }
         }
     }

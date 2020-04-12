@@ -1,6 +1,6 @@
 <?php
 
-class Hewan_model extends CI_Model 
+class Hewan_model extends CI_Model
 {
 
     public function getHewan($id_hewan)
@@ -25,8 +25,16 @@ class Hewan_model extends CI_Model
 
     public function deleteHewan($id_hewan)
     {
+        $this->db->db_debug = FALSE;
         $this->db->delete('data_hewan', ['id_hewan' => $id_hewan]);
-        return $this->db->affected_rows();
+        $rowAffected = $this->db->affected_rows();
+        $e = $this->db->error();
+        
+        if ($e['code'] == 1451) {
+            return -1;
+        } else {
+            return $rowAffected;
+        }
     }
     public function createHewan($data)
     {

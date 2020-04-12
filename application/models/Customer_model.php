@@ -18,8 +18,16 @@ class Customer_model extends CI_Model
 
     public function deleteCustomer($id)
     {
+        $this->db->db_debug = FALSE;
         $this->db->delete('data_customer', ['id_customer' => $id]);
-        return $this->db->affected_rows();
+        $rowAffected = $this->db->affected_rows();
+        $e = $this->db->error();
+        
+        if ($e['code'] == 1451) {
+            return -1;
+        } else {
+            return $rowAffected;
+        }
     }
     public function createCustomer($data)
     {

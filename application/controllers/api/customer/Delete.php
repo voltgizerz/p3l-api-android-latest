@@ -33,13 +33,19 @@ class Delete extends REST_Controller
                     'message' => 'SUKSES DELETE CUSTOMER!',
                 ], REST_Controller::HTTP_CREATED);
                 # code...
-            } else {
+            } else if ($this->Customer_model->deleteCustomer($id) == 0) {
                 ////id not found
                 $this->response([
                     'status' => false,
                     'message' => 'GAGAL DELETE CUSTOMER ID TIDAK DITEMUKAN !',
 
                 ], REST_Controller::HTTP_BAD_REQUEST);
+            } else if ($this->Customer_model->deleteCustomer($id) == -1) {
+                // ada foreign key
+                $this->response([
+                    'status' => false,
+                    'message' => 'DATA INI SEDANG DIGUNAKAN!',
+                ], REST_Controller::HTTP_CREATED);
             }
         }
     }

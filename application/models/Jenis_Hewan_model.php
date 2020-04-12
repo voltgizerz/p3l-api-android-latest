@@ -18,8 +18,16 @@ class Jenis_Hewan_model extends CI_Model
 
     public function deleteJenisHewan($id)
     {
+        $this->db->db_debug = FALSE;
         $this->db->delete('data_jenis_hewan', ['id_jenis_hewan' => $id]);
-        return $this->db->affected_rows();
+        $rowAffected = $this->db->affected_rows();
+        $e = $this->db->error();
+        
+        if ($e['code'] == 1451) {
+            return -1;
+        } else {
+            return $rowAffected;
+        }
     }
     public function createJenisHewan($data)
     {

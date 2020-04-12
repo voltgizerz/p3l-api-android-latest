@@ -18,8 +18,16 @@ class Ukuran_Hewan_model extends CI_Model
 
     public function deleteUkuranHewan($id_ukuran_hewan)
     {
+        $this->db->db_debug = FALSE;
         $this->db->delete('data_ukuran_hewan', ['id_ukuran_hewan' => $id_ukuran_hewan]);
-        return $this->db->affected_rows();
+        $rowAffected = $this->db->affected_rows();
+        $e = $this->db->error();
+        
+        if ($e['code'] == 1451) {
+            return -1;
+        } else {
+            return $rowAffected;
+        }
     }
     public function createUkuranHewan($data)
     {

@@ -33,13 +33,19 @@ class Delete extends REST_Controller
                     'message' => 'SUKSES DELETE SUPPLIER!',
                 ], REST_Controller::HTTP_CREATED);
                 # code...
-            } else {
+            } else if ($this->Supplier_model->deleteSupplier($id) == 0) {
                 ////id not found
                 $this->response([
                     'status' => false,
                     'message' => 'GAGAL DELETE SUPPLIER ID TIDAK DITEMUKAN !',
 
                 ], REST_Controller::HTTP_BAD_REQUEST);
+            } else if ($this->Supplier_model->deleteSupplier($id) == -1) {
+                // ada foreign key
+                $this->response([
+                    'status' => false,
+                    'message' => 'DATA INI SEDANG DIGUNAKAN!',
+                ], REST_Controller::HTTP_CREATED);
             }
         }
     }

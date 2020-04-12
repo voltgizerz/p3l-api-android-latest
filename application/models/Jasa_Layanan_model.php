@@ -24,8 +24,16 @@ class Jasa_Layanan_model extends CI_Model
 
     public function deleteJasaLayanan($id)
     {
+        $this->db->db_debug = FALSE;
         $this->db->delete('data_jasa_layanan', ['id_jasa_layanan' => $id]);
-        return $this->db->affected_rows();
+        $rowAffected = $this->db->affected_rows();
+        $e = $this->db->error();
+        
+        if ($e['code'] == 1451) {
+            return -1;
+        } else {
+            return $rowAffected;
+        }
     }
     public function createJasaLayanan($data)
     {
