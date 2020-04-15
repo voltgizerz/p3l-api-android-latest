@@ -21,9 +21,11 @@ class Update extends REST_Controller
         $pengadaan = new UserData();
         $pengadaan->id_supplier = $this->post('id_supplier');
         $pengadaan->status = $this->post('status');
+        $kodePengadaan = [
+            'kode_pengadaan_fk' => $this->post('kode_pengadaan_fk'),
+        ];
 
-
-        $response = $this->Pengadaan_model->updatePengadaan($pengadaan, $id);
+        $response = $this->Pengadaan_model->updatePengadaan($pengadaan, $id,$kodePengadaan);
 
         return $this->returnData($response['msg'], $response['error']);
     }

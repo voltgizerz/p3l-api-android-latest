@@ -36,7 +36,7 @@ class Pengadaan_model extends CI_Model
         }
     }
 
-    public function deletePengadaan($id,$kodePengadaan)
+    public function deletePengadaan($id, $kodePengadaan)
     {
         $this->db->delete('data_detail_pengadaan', ['kode_pengadaan_fk' => $kodePengadaan['kode_pengadaan']]);
         $this->db->delete('data_pengadaan', ['id_pengadaan' => $id]);
@@ -48,16 +48,36 @@ class Pengadaan_model extends CI_Model
         return $this->db->affected_rows();
     }
 
-    public function updatePengadaan($request, $id)
+    public function updatePengadaan($request, $id,$kodePengadaan)
     {
         $updateData =
             [
             'id_supplier' => $request->id_supplier,
             'status' => $request->status,
         ];
-
+        
         if ($this->db->where('id_pengadaan', $id)->update('data_pengadaan', $updateData)) {
-            return ['msg' => 'Berhasil Update pengadaan', 'error' => false];
+        
+            if ($updateData['status'] == "Sudah Diterima") {
+                $this->db->select('*');
+                $this->db->from('data_detail_pengadaan');
+                $this->db->where('kode_pengadaan_fk', $kodePengadaan['kode_pengadaan_fk']);
+                $query = $this->db->get();
+                $arrProdukPengadaan = $query->result_array();
+                //memasukan stok produk ke data produk
+                for ($i = 0; $i < count($arrProdukPengadaan); $i++) {
+                    //AMBIL STOK PRODUK LAMA
+                    $this->db->select('stok_produk');
+                    $this->db->from('data_produk');
+                    $this->db->where('id_produk', $arrProdukPengadaan[$i]['id_produk_fk']);
+                    $arrStokLama = $this->db->get()->result_array();
+                    // TAMBAH STOK PRODUK
+                    $this->db->where('id_produk', $arrProdukPengadaan[$i]['id_produk_fk'])->update('data_produk', ['stok_produk' => $arrStokLama[0]['stok_produk']+$arrProdukPengadaan[$i]['jumlah_pengadaan']]);
+                }
+                return ['msg' => 'Berhasil Update pengadaan', 'error' => false];
+            } else {
+                return ['msg' => 'Berhasil Update pengadaan', 'error' => false];
+            }
         }
         return ['msg' => 'Gagal Update pengadaan', 'error' => true];
     }
