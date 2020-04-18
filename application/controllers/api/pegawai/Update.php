@@ -25,14 +25,14 @@ class Update extends REST_Controller
         $pegawai->nomor_hp_pegawai = $this->post('nomor_hp_pegawai');
         $pegawai->role_pegawai = $this->post('role_pegawai');
         $pegawai->username = $this->post('username');
-        $pegawai->password = password_hash($this->post('password'),PASSWORD_DEFAULT);
+        $pegawai->password = password_hash($this->post('password'), PASSWORD_DEFAULT);
         $pegawai->updated_date = date("Y-m-d H:i:s");
         $pegawai->deleted_date = date("0000:00:0:00:00");
         $response = $this->Pegawai_model->updatePegawai($pegawai, $id);
 
         return $this->returnData($response['msg'], $response['error']);
     }
-    
+
     public function returnData($msg, $error)
     {
         $response['error'] = $error;

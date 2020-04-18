@@ -42,9 +42,16 @@ class Jenis_Hewan_model extends CI_Model
             'updated_date' => $request->updated_date,
             'deleted_date' => $request->deleted_date,
         ];
-
-        if ($this->db->where('id_jenis_hewan', $id)->update('data_jenis_hewan', $updateData)) {
-            return ['msg' => 'Berhasil Update Jenis Hewan', 'error' => false];
+        $cekID = $this->db->query("SELECT nama_jenis_hewan FROM data_jenis_hewan WHERE nama_jenis_hewan ='$request->nama_jenis_hewan' && id_jenis_hewan != '$id'");
+      
+        if($cekID->num_rows() >= 1){
+            //JENIS HEWAN SUDAH TERDAFTAR
+                return ['msg' => 'Gagal, Jenis Hewan sudah Terdaftar!', 'error' => true];
+        }else{
+            //JENIS HEWAN BELUM TERDAFTAR
+            if ($this->db->where('id_jenis_hewan', $id)->update('data_jenis_hewan', $updateData)) {
+                return ['msg' => 'Berhasil Update Jenis Hewan', 'error' => false];
+            }
         }
         return ['msg' => 'Gagal Update Jenis Hewan', 'error' => true];
     }

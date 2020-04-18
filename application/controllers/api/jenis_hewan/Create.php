@@ -26,20 +26,37 @@ class Create extends REST_Controller
             'updated_date' => date("0000:00:0:00:00"),
             'deleted_date' => date("0000:00:0:00:00"),
         ];
-        if ($this->jenis_hewan->createJenisHewan($data) > 0) {
-            # code...
-            $this->response([
-                'status' => true,
-                'message' => 'SUKSES JENIS HEWAN BERHASIL DI TAMBAHKAN !',
 
-            ], REST_Controller::HTTP_CREATED);
-        } else {
+        // check jenis hwan
+        $jenis = $this->post('nama_jenis_hewan');
+
+        $query = "SELECT nama_jenis_hewan FROM data_jenis_hewan WHERE nama_jenis_hewan = '$jenis'";
+        $result = $this->db->query($query, $jenis);
+
+        if ($result->num_rows() >= 1) {
 
             $this->response([
                 'status' => false,
-                'message' => 'GAGAL, MENAMBAHKAN JENIS HEWAN BARU !',
+                'message' => 'GAGAL, JENIS HEWAN SUDAH ADA!',
 
             ], REST_Controller::HTTP_BAD_REQUEST);
+        } else {
+
+            if ($this->jenis_hewan->createJenisHewan($data) > 0) {
+                # code...
+                $this->response([
+                    'status' => true,
+                    'message' => 'SUKSES JENIS HEWAN BERHASIL DI TAMBAHKAN !',
+
+                ], REST_Controller::HTTP_CREATED);
+            } else {
+
+                $this->response([
+                    'status' => false,
+                    'message' => 'GAGAL, MENAMBAHKAN JENIS HEWAN BARU !',
+
+                ], REST_Controller::HTTP_BAD_REQUEST);
+            }
         }
     }
 }

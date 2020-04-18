@@ -1,6 +1,6 @@
 <?php
 
-class Ukuran_Hewan_model extends CI_Model 
+class Ukuran_Hewan_model extends CI_Model
 {
 
     public function getUkuranHewan($id_ukuran_hewan)
@@ -18,11 +18,11 @@ class Ukuran_Hewan_model extends CI_Model
 
     public function deleteUkuranHewan($id_ukuran_hewan)
     {
-        $this->db->db_debug = FALSE;
+        $this->db->db_debug = false;
         $this->db->delete('data_ukuran_hewan', ['id_ukuran_hewan' => $id_ukuran_hewan]);
         $rowAffected = $this->db->affected_rows();
         $e = $this->db->error();
-        
+
         if ($e['code'] == 1451) {
             return -1;
         } else {
@@ -35,7 +35,7 @@ class Ukuran_Hewan_model extends CI_Model
         return $this->db->affected_rows();
     }
 
-    public function updateUkuranHewan($request, $id_ukuran_hewan)
+    public function updateUkuranHewan($request, $id)
     {
         $updateData =
             ['ukuran_hewan' => $request->ukuran_hewan,
@@ -43,8 +43,16 @@ class Ukuran_Hewan_model extends CI_Model
             'deleted_date' => $request->deleted_date,
         ];
 
-        if ($this->db->where('id_ukuran_hewan', $id_ukuran_hewan)->update('data_ukuran_hewan', $updateData)) {
-            return ['msg' => 'SUSKSES UPDATE UKURAN HEWAN!', 'id_ukuran_hewan' => $id_ukuran_hewan, 'error' => false];
+        $cekID = $this->db->query("SELECT ukuran_hewan FROM data_ukuran_hewan WHERE ukuran_hewan ='$request->ukuran_hewan' && id_ukuran_hewan != '$id'");
+      
+        if($cekID->num_rows() >= 1){
+            //ukuran SUDAH TERDAFTAR
+                return ['msg' => 'Gagal, Ukuran Hewan sudah Terdaftar!', 'error' => true];
+        }else{
+            //ukuranBELUM TERDAFTAR
+            if ($this->db->where('id_ukuran_hewan', $id)->update('data_ukuran_hewan', $updateData)) {
+                return ['msg' => 'Berhasil Update Ukuran Hewan', 'error' => false];
+            }
         }
         return ['msg' => 'GAGAL, UPDATE HEWAN ID TIDAK DITEMUKAN !', 'error' => true];
     }

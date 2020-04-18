@@ -25,6 +25,20 @@ class Create extends REST_Controller
             'updated_date' => date("0000:00:0:00:00"),
             'deleted_date' => date("0000:00:0:00:00"),
         ];
+
+        $ukuran = $this->post('ukuran_hewan');
+
+        $query = "SELECT ukuran_hewan FROM data_ukuran_hewan WHERE ukuran_hewan = '$ukuran'";
+        $result = $this->db->query($query, $ukuran);
+
+        if ($result->num_rows() >= 1) {
+
+            $this->response([
+                'status' => false,
+                'message' => 'GAGAL, UKURAN HEWAN SUDAH ADA!',
+
+            ], REST_Controller::HTTP_BAD_REQUEST);
+        } else {
         if ($this->ukuran_hewan->createUkuranHewan($data) > 0) {
             # code...
             $this->response([
@@ -40,5 +54,6 @@ class Create extends REST_Controller
 
             ], REST_Controller::HTTP_BAD_REQUEST);
         }
+    }
     }
 }
