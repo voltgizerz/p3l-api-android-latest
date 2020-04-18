@@ -24,6 +24,7 @@ class Create extends REST_Controller
             'harga_produk' => $this->post('harga_produk'),
             'stok_produk' => $this->post('stok_produk'),
             'gambar_produk' => $this->response_upload(),
+            'gambar_produk_desktop' => $_FILES["gambar_produk"]["name"],
             'stok_minimal_produk' => $this->post('stok_minimal_produk'),
             'created_date' => date("Y-m-d H:i:s"),
             'updated_date' => date("0000:00:0:00:00"),
@@ -57,8 +58,7 @@ class Create extends REST_Controller
         
          
        if ($_FILES["gambar_produk"]["name"] != "") 
-       {
-          
+       { 
             $destinationfile = $part.$filename;
 			if(move_uploaded_file($_FILES['gambar_produk']['tmp_name'],  $destinationfile))
 			{

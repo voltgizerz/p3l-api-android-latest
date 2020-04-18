@@ -23,6 +23,7 @@ class Update extends REST_Controller
         $produk->harga_produk = $this->post('harga_produk');
         $produk->stok_produk = $this->post('stok_produk');
         $produk->gambar_produk = $this->response_upload($id);
+        $produk->gambar_produk_desktop = $_FILES["gambar_produk"]["name"];
         $produk->stok_minimal_produk = $this->post('stok_minimal_produk');
 
         $produk->updated_date = date("Y-m-d H:i:s");
