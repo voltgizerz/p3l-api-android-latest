@@ -19,7 +19,7 @@ class Produk_model extends CI_Model
 
         if ($id === null) {
 
-            $this->db->select('id_produk,nama_produk,harga_produk,gambar_produk,stok_minimal_produk,created_date,updated_date,deleted_date');
+            $this->db->select('id_produk,nama_produk,harga_produk,stok_produk,gambar_produk,stok_minimal_produk,created_date,updated_date,deleted_date');
             $this->db->from('data_produk');
             return $this->db->get()->result_array();
             # code...
