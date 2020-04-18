@@ -39,7 +39,7 @@ class Create extends REST_Controller
                 'status' => false,
                 'message' => 'GAGAL, JENIS HEWAN SUDAH ADA!',
 
-            ], REST_Controller::HTTP_BAD_REQUEST);
+            ], REST_Controller::HTTP_CREATED);
         } else {
 
             if ($this->jenis_hewan->createJenisHewan($data) > 0) {

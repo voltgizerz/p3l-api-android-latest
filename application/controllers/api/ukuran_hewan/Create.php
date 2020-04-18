@@ -37,7 +37,7 @@ class Create extends REST_Controller
                 'status' => false,
                 'message' => 'GAGAL, UKURAN HEWAN SUDAH ADA!',
 
-            ], REST_Controller::HTTP_BAD_REQUEST);
+            ], REST_Controller::HTTP_CREATED);
         } else {
         if ($this->ukuran_hewan->createUkuranHewan($data) > 0) {
             # code...
