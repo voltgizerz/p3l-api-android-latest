@@ -19,7 +19,6 @@ class Customer_model extends CI_Model
     public function deleteCustomer($id)
     {
         $this->db->db_debug = false;
-
         //TAMPUNG SEMENTARA DATA YANG KEMUNGKINAN BISA DIHAPUS
         $this->db->select('*');
         $this->db->from('data_customer');
