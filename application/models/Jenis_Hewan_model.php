@@ -121,5 +121,4 @@ class Jenis_Hewan_model extends CI_Model
 
     }
 
-    
 }

@@ -28,20 +28,38 @@ class Create extends REST_Controller
             'updated_date' => date("0000:00:0:00:00"),
             'deleted_date' => date("0000:00:0:00:00"),
         ];
-        if ($this->jasa_layanan->createJasaLayanan($data) > 0) {
-            # code...
+
+         // check layanan
+         $layanan = $this->post('nama_jasa_layanan');
+
+         $query = "SELECT nama_jasa_layanan FROM data_jasa_layanan WHERE nama_jasa_layanan = '$layanan'";
+         $result = $this->db->query($query, $layanan);
+
+        if ($result->num_rows() >= 1) {
+
             $this->response([
-                'status' => true,
-                'message' => 'SUKSES JASA LAYANAN BERHASIL DI TAMBAHKAN !',
+                'status' => false,
+                'message' => 'GAGAL, JASA LAYANAN SUDAH ADA!',
 
             ], REST_Controller::HTTP_CREATED);
         } else {
 
-            $this->response([
-                'status' => false,
-                'message' => 'GAGAL, MENAMBAHKAN JASA LAYANAN BARU !',
+            if ($this->jasa_layanan->createJasaLayanan($data) > 0) {
 
-            ], REST_Controller::HTTP_BAD_REQUEST);
+                # code...
+                $this->response([
+                    'status' => true,
+                    'message' => 'SUKSES JASA LAYANAN BERHASIL DI TAMBAHKAN !',
+
+                ], REST_Controller::HTTP_CREATED);
+            } else {
+
+                $this->response([
+                    'status' => false,
+                    'message' => 'GAGAL, MENAMBAHKAN JASA LAYANAN BARU !',
+
+                ], REST_Controller::HTTP_BAD_REQUEST);
+            }
         }
     }
 }

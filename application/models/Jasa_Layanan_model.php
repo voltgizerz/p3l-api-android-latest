@@ -93,8 +93,15 @@ class Jasa_Layanan_model extends CI_Model
             'deleted_date' => $request->deleted_date,
         ];
 
-        if ($this->db->where('id_jasa_layanan', $id)->update('data_jasa_layanan', $updateData)) {
-            return ['msg' => 'Berhasil Update Jasa Layanan', 'error' => false];
+        $cekID = $this->db->query("SELECT nama_jasa_layanan FROM data_jasa_layanan WHERE nama_jasa_layanan ='$request->nama_jasa_layanan' && id_jasa_layanan != '$id'");
+
+        if ($cekID->num_rows() >= 1) {
+            //JENIS HEWAN SUDAH TERDAFTAR
+            return ['msg' => 'Gagal, Jasa Layanan sudah Terdaftar!', 'error' => true];
+        } else {
+            if ($this->db->where('id_jasa_layanan', $id)->update('data_jasa_layanan', $updateData)) {
+                return ['msg' => 'Berhasil Update Jasa Layanan', 'error' => false];
+            }
         }
         return ['msg' => 'Gagal Update Jasa Layanan', 'error' => true];
     }
