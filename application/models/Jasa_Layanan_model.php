@@ -7,7 +7,7 @@ class Jasa_Layanan_model extends CI_Model
     {
         if ($id === null) {
 
-            $this->db->select('*');
+            $this->db->select('data_jasa_layanan.id_jasa_layanan,data_jasa_layanan.nama_jasa_layanan,data_jasa_layanan.harga_jasa_layanan,data_jasa_layanan.id_jenis_hewan,data_jasa_layanan.id_ukuran_hewan,data_jasa_layanan.created_date,data_jasa_layanan.updated_date,data_jasa_layanan.deleted_date,data_ukuran_hewan.ukuran_hewan,data_jenis_hewan.nama_jenis_hewan');
             $this->db->join('data_ukuran_hewan', 'data_ukuran_hewan.id_ukuran_hewan = data_jasa_layanan.id_ukuran_hewan');
             $this->db->join('data_jenis_hewan', 'data_jenis_hewan.id_jenis_hewan = data_jasa_layanan.id_jenis_hewan');
             $this->db->from('data_jasa_layanan');
