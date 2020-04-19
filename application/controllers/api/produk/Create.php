@@ -30,50 +30,59 @@ class Create extends REST_Controller
             'updated_date' => date("0000:00:0:00:00"),
             'deleted_date' => date("0000:00:0:00:00"),
         ];
-        if ($this->produk->createProduk($data) > 0) {
-            # code...
-            $this->response([
-                'status' => true,
-                'message' => 'SUKSES Produk BERHASIL DI TAMBAHKAN !',
+        // check layanan
+        $produk = $this->post('nama_produk');
 
-            ], REST_Controller::HTTP_CREATED);
-        } else {
+        $query = "SELECT nama_produk FROM data_produk WHERE nama_produk = '$produk'";
+        $result = $this->db->query($query, $produk);
+
+        if ($result->num_rows() >= 1) {
 
             $this->response([
                 'status' => false,
-                'message' => 'GAGAL, MENAMBAHKAN Produk BARU !',
+                'message' => 'GAGAL, PRODUK SUDAH ADA!',
 
-            ], REST_Controller::HTTP_BAD_REQUEST);
+            ], REST_Controller::HTTP_CREATED);
+        } else {
+            if ($this->produk->createProduk($data) > 0) {
+                # code...
+                $this->response([
+                    'status' => true,
+                    'message' => 'SUKSES Produk BERHASIL DI TAMBAHKAN !',
+
+                ], REST_Controller::HTTP_CREATED);
+            } else {
+
+                $this->response([
+                    'status' => false,
+                    'message' => 'GAGAL, MENAMBAHKAN Produk BARU !',
+
+                ], REST_Controller::HTTP_BAD_REQUEST);
+            }
         }
     }
 
     public function response_upload()
     {
         $part = "upload/gambar_produk/";
-	    $filename = "img".rand(9,9999).".jpg";
-	    
-	    if (!file_exists('upload/gambar/')) {
+        $filename = "img" . rand(9, 9999) . ".jpg";
+
+        if (!file_exists('upload/gambar/')) {
             mkdir('upload/gambar/', 777, true);
         }
-        
-         
-       if ($_FILES["gambar_produk"]["name"] != "") 
-       { 
-            $destinationfile = $part.$filename;
-			if(move_uploaded_file($_FILES['gambar_produk']['tmp_name'],  $destinationfile))
-			{
-                return $destinationfile;
-			}else
-			{
-			    // gagal upload
-			    return 'upload/gambar_produk/default.jpg' ;
-			}
 
-        } 
-        else 
-        {
+        if ($_FILES["gambar_produk"]["name"] != "") {
+            $destinationfile = $part . $filename;
+            if (move_uploaded_file($_FILES['gambar_produk']['tmp_name'], $destinationfile)) {
+                return $destinationfile;
+            } else {
+                // gagal upload
+                return 'upload/gambar_produk/default.jpg';
+            }
+
+        } else {
             //file upload tidak ada
-           return 'upload/gambar_produk/default.jpg' ;
+            return 'upload/gambar_produk/default.jpg';
         }
     }
 }

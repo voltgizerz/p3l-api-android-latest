@@ -85,8 +85,16 @@ class Supplier_model extends CI_Model
             'deleted_date' => $request->deleted_date,
         ];
 
-        if ($this->db->where('id_supplier', $id)->update('data_supplier', $updateData)) {
-            return ['msg' => 'Berhasil Update Supplier', 'error' => false];
+        $cekID = $this->db->query("SELECT nama_supplier FROM data_supplier WHERE nama_supplier ='$request->nama_supplier' && id_supplier != '$id'");
+
+        if ($cekID->num_rows() >= 1) {
+            //SUPPLIER SUDAH TERDAFTAR
+            return ['msg' => 'Gagal, Supplier sudah Terdaftar!', 'error' => true];
+        } else {
+
+            if ($this->db->where('id_supplier', $id)->update('data_supplier', $updateData)) {
+                return ['msg' => 'Berhasil Update Supplier', 'error' => false];
+            }
         }
         return ['msg' => 'Gagal Update Supplier', 'error' => true];
     }
@@ -103,7 +111,8 @@ class Supplier_model extends CI_Model
         }
     }
 
-    public function restoreSupplier($request, $id){
+    public function restoreSupplier($request, $id)
+    {
         $updateData =
             [
             'created_date' => $request->created_date,
@@ -114,6 +123,6 @@ class Supplier_model extends CI_Model
             return ['msg' => 'SUKSES RESTORE SUPPLIER!', 'id_supplier' => $id, 'error' => false];
         }
         return ['msg' => 'GAGAL, RESTORE SUPPLIER ID TIDAK DITEMUKAN !', 'error' => true];
-        
+
     }
 }

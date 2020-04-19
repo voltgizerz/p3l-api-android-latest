@@ -54,20 +54,20 @@ class Produk_model extends CI_Model
             }
         } else {
             // DATA BERHASIL DI HAPUS BERARTI TIDAK SEDANG DIGUNAKAN
-           
+
             $data = [
                 'id_produk' => $arrTampData[0]['id_produk'],
                 'nama_produk' => $arrTampData[0]['nama_produk'],
                 'harga_produk' => $arrTampData[0]['harga_produk'],
                 'stok_produk' => $arrTampData[0]['stok_produk'],
                 'gambar_produk' => $arrTampData[0]['gambar_produk'],
-                'gambar_produk_desktop' =>  file_get_contents($arrTampData[0]['gambar_produk']),
+                'gambar_produk_desktop' => file_get_contents($arrTampData[0]['gambar_produk']),
                 'stok_minimal_produk' => $arrTampData[0]['stok_minimal_produk'],
                 'created_date' => $arrTampData[0]['created_date'],
                 'updated_date' => $arrTampData[0]['updated_date'],
                 'deleted_date' => $arrTampData[0]['deleted_date'],
             ];
-            
+
             // RETURN DATA
             $this->db->insert('data_produk', $data);
             date_default_timezone_set("Asia/Bangkok");
@@ -109,8 +109,16 @@ class Produk_model extends CI_Model
             'deleted_date' => $request->deleted_date,
         ];
 
-        if ($this->db->where('id_produk', $id)->update('data_produk', $updateData)) {
-            return ['msg' => 'Berhasil Update Produk', 'error' => false];
+        $cekID = $this->db->query("SELECT nama_produk FROM data_produk WHERE nama_produk ='$request->nama_produk' && id_produk != '$id'");
+
+        if ($cekID->num_rows() >= 1) {
+            //JENIS HEWAN SUDAH TERDAFTAR
+            return ['msg' => 'Gagal, Produk sudah Terdaftar!', 'error' => true];
+        } else {
+
+            if ($this->db->where('id_produk', $id)->update('data_produk', $updateData)) {
+                return ['msg' => 'Berhasil Update Produk', 'error' => false];
+            }
         }
         return ['msg' => 'Gagal Update Produk', 'error' => true];
     }
