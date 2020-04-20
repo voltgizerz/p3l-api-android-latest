@@ -128,4 +128,18 @@ class Hewan_model extends CI_Model
         return ['msg' => 'GAGAL, RESTORE HEWAN ID TIDAK DITEMUKAN !', 'error' => true];
 
     }
+
+    public function deletePermanentHewan($id)
+    {
+        $this->db->db_debug = FALSE;
+        $this->db->delete('data_hewan', ['id_hewan' => $id]);
+        $rowAffected = $this->db->affected_rows();
+        $e = $this->db->error();
+        
+        if ($e['code'] == 1451) {
+            return -1;
+        } else {
+            return $rowAffected;
+        }
+    }
 }

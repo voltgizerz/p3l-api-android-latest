@@ -70,7 +70,7 @@ class Customer_model extends CI_Model
             }
         }
     }
-    
+
     public function createCustomer($data)
     {
         $this->db->insert('data_customer', $data);
@@ -106,7 +106,8 @@ class Customer_model extends CI_Model
         }
     }
 
-    public function restoreCustomer($request, $id){
+    public function restoreCustomer($request, $id)
+    {
         $updateData =
             [
             'created_date' => $request->created_date,
@@ -117,6 +118,20 @@ class Customer_model extends CI_Model
             return ['msg' => 'SUKSES RESTORE CUSTOMER!', 'id_customer' => $id, 'error' => false];
         }
         return ['msg' => 'GAGAL, RESTORE CUSTOMER ID TIDAK DITEMUKAN !', 'error' => true];
+
+    }
+
+     public function deletePermanentCustomer($id)
+    {
+        $this->db->db_debug = FALSE;
+        $this->db->delete('data_customer', ['id_customer' => $id]);
+        $rowAffected = $this->db->affected_rows();
+        $e = $this->db->error();
         
+        if ($e['code'] == 1451) {
+            return -1;
+        } else {
+            return $rowAffected;
+        }
     }
 }

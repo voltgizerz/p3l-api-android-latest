@@ -67,7 +67,7 @@ class Ukuran_Hewan_model extends CI_Model
             }
         }
     }
-    
+
     public function createUkuranHewan($data)
     {
         $this->db->insert('data_ukuran_hewan', $data);
@@ -121,5 +121,19 @@ class Ukuran_Hewan_model extends CI_Model
         }
         return ['msg' => 'GAGAL, RESTORE UKURAN HEWAN ID TIDAK DITEMUKAN !', 'error' => true];
 
+    }
+
+    public function deletePermanentUkuran($id)
+    {
+        $this->db->db_debug = FALSE;
+        $this->db->delete('data_ukuran_hewan', ['id_ukuran_hewan' => $id]);
+        $rowAffected = $this->db->affected_rows();
+        $e = $this->db->error();
+        
+        if ($e['code'] == 1451) {
+            return -1;
+        } else {
+            return $rowAffected;
+        }
     }
 }
