@@ -170,4 +170,18 @@ class Produk_model extends CI_Model
 
     }
 
+    public function deletePermanentProduk($id)
+    {
+        $this->db->db_debug = false;
+        $this->db->delete('data_produk', ['id_produk' => $id]);
+        $rowAffected = $this->db->affected_rows();
+        $e = $this->db->error();
+
+        if ($e['code'] == 1451) {
+            return -1;
+        } else {
+            return $rowAffected;
+        }
+    }
+
 }

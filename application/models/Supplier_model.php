@@ -125,4 +125,18 @@ class Supplier_model extends CI_Model
         return ['msg' => 'GAGAL, RESTORE SUPPLIER ID TIDAK DITEMUKAN !', 'error' => true];
 
     }
+
+    public function deletePermanentSupplier($id)
+    {
+        $this->db->db_debug = FALSE;
+        $this->db->delete('data_supplier', ['id_supplier' => $id]);
+        $rowAffected = $this->db->affected_rows();
+        $e = $this->db->error();
+        
+        if ($e['code'] == 1451) {
+            return -1;
+        } else {
+            return $rowAffected;
+        }
+    }
 }

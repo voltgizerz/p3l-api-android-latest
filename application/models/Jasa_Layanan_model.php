@@ -132,4 +132,18 @@ class Jasa_Layanan_model extends CI_Model
         return ['msg' => 'GAGAL, RESTORE JASA LAYANAN ID TIDAK DITEMUKAN !', 'error' => true];
 
     }
+
+    public function deletePermanentJasaLayanan($id)
+    {
+        $this->db->db_debug = FALSE;
+        $this->db->delete('data_jasa_layanan', ['id_jasa_layanan' => $id]);
+        $rowAffected = $this->db->affected_rows();
+        $e = $this->db->error();
+        
+        if ($e['code'] == 1451) {
+            return -1;
+        } else {
+            return $rowAffected;
+        }
+    }
 }
