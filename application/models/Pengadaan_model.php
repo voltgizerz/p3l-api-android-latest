@@ -54,6 +54,7 @@ class Pengadaan_model extends CI_Model
             [
             'id_supplier' => $request->id_supplier,
             'status' => $request->status,
+            'updated_date' =>$request->updated_date
         ];
         
         if ($this->db->where('id_pengadaan', $id)->update('data_pengadaan', $updateData)) {
