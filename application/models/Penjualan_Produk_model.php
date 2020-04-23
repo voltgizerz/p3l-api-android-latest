@@ -8,12 +8,11 @@ class Penjualan_Produk_model extends CI_Model
         if ($id === null) {
 
             $this->db->select('data_transaksi_penjualan_produk.id_transaksi_penjualan_produk,data_transaksi_penjualan_produk.kode_transaksi_penjualan_produk
-            ,data_transaksi_penjualan_produk.id_hewan,data_transaksi_penjualan_produk.tanggal_penjualan_produk,
+            ,data_transaksi_penjualan_produk.tanggal_penjualan_produk,
             data_transaksi_penjualan_produk.tanggal_pembayaran_produk,data_transaksi_penjualan_produk.diskon,
             data_transaksi_penjualan_produk.total_penjualan_produk,data_transaksi_penjualan_produk.total_harga,data_transaksi_penjualan_produk.status_pembayaran,data_transaksi_penjualan_produk.id_cs,
             data_transaksi_penjualan_produk.id_kasir,data_transaksi_penjualan_produk.created_date,data_transaksi_penjualan_produk.updated_date,
-            data_hewan.nama_hewan,data_pegawai.nama_pegawai AS nama_cs, a.nama_pegawai AS nama_kasir');
-            $this->db->join('data_hewan', 'data_hewan.id_hewan = data_transaksi_penjualan_produk.id_hewan');
+            data_pegawai.nama_pegawai AS nama_cs, a.nama_pegawai AS nama_kasir');
             $this->db->join('data_pegawai', 'data_pegawai.id_pegawai = data_transaksi_penjualan_produk.id_cs');
             $this->db->join('data_pegawai a', 'a.id_pegawai = data_transaksi_penjualan_produk.id_kasir');
             $this->db->from('data_transaksi_penjualan_produk');
