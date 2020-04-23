@@ -37,6 +37,13 @@ class Get extends REST_Controller
 
             ], REST_Controller::HTTP_OK);
             # code...
+        } else if($ukuran_hewan == null) {
+
+            $this->response([
+                'status' => true,
+                'data' => $ukuran_hewan,
+                'message' => 'DATA UKURAN HEWAN MASIH KOSONG',
+            ], REST_Controller::HTTP_OK);
         } else {
 
             $this->response([

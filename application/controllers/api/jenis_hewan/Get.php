@@ -37,8 +37,14 @@ class Get extends REST_Controller
 
             ], REST_Controller::HTTP_OK);
             # code...
-        } else {
+        } else if($jenis_hewan == null) {
 
+            $this->response([
+                'status' => true,
+                'data' => $jenis_hewan,
+                'message' => 'DATA JENIS HEWAN MASIH KOSONG',
+            ], REST_Controller::HTTP_OK);
+        } else {
             $this->response([
                 'status' => false,
                 'message' => 'GAGAL, ID JENIS HEWAN TIDAK DITEMUKAN / SALAH FORMAT !',

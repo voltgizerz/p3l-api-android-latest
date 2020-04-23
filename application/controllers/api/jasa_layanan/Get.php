@@ -37,6 +37,13 @@ class Get extends REST_Controller
 
             ], REST_Controller::HTTP_OK);
             # code...
+        } else if($jasa_layanan == null) {
+
+            $this->response([
+                'status' => true,
+                'data' => $jasa_layanan,
+                'message' => 'DATA JASA LAYANAN MASIH KOSONG',
+            ], REST_Controller::HTTP_OK);
         } else {
 
             $this->response([

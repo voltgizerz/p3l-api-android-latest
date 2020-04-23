@@ -37,11 +37,18 @@ class Get extends REST_Controller
 
             ], REST_Controller::HTTP_OK);
             # code...
+        } else if($penjualan == null) {
+
+            $this->response([
+                'status' => true,
+                'data' => $penjualan,
+                'message' => 'DATA PENJUALAN MASIH KOSONG',
+            ], REST_Controller::HTTP_OK);
         } else {
 
             $this->response([
                 'status' => false,
-                'message' => 'GAGAL, ID PENGADAAN TIDAK DITEMUKAN / SALAH FORMAT !',
+                'message' => 'GAGAL, ID PENJUALAN TIDAK DITEMUKAN / SALAH FORMAT !',
             ], REST_Controller::HTTP_NOT_FOUND);
         }
     }

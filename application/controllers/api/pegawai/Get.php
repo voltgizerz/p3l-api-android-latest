@@ -37,6 +37,13 @@ class Get extends REST_Controller
 
             ], REST_Controller::HTTP_OK);
             # code...
+        } else if($pegawai == null) {
+
+            $this->response([
+                'status' => true,
+                'data' => $pegawai,
+                'message' => 'DATA PEGAWAI MASIH KOSONG',
+            ], REST_Controller::HTTP_OK);
         } else {
 
             $this->response([

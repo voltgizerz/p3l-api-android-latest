@@ -28,7 +28,7 @@ class Get extends REST_Controller
 
             $pengadaan = $this->pengadaan->getPengadaan($id);
         }
-
+    
         if ($pengadaan) {
 
             $this->response([
@@ -37,8 +37,14 @@ class Get extends REST_Controller
 
             ], REST_Controller::HTTP_OK);
             # code...
-        } else {
+        } else if($pengadaan == null) {
 
+            $this->response([
+                'status' => true,
+                'data' => $pengadaan,
+                'message' => 'DATA PENGADAAN MASIH KOSONG',
+            ], REST_Controller::HTTP_OK);
+        } else {
             $this->response([
                 'status' => false,
                 'message' => 'GAGAL, ID PENGADAAN TIDAK DITEMUKAN / SALAH FORMAT !',

@@ -12,7 +12,6 @@ class Pengadaan_detail_model extends CI_Model
             $this->db->from('data_detail_pengadaan');
             $query = $this->db->get();
             $arrTemp = $query->result_array();
-
             return $arrTemp;
 
             # code...

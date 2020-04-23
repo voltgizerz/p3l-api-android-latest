@@ -37,6 +37,13 @@ class Get extends REST_Controller
 
             ], REST_Controller::HTTP_OK);
             # code...
+        } else if($supplier == null) {
+
+            $this->response([
+                'status' => true,
+                'data' => $supplier,
+                'message' => 'DATA SUPPLIER MASIH KOSONG',
+            ], REST_Controller::HTTP_OK);
         } else {
 
             $this->response([
