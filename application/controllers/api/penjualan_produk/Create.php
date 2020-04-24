@@ -22,10 +22,11 @@ class Create extends REST_Controller
         $data = [
             'kode_transaksi_penjualan_produk' => $this->penjualan->ambilKode(),
             'tanggal_penjualan_produk' => date("Y-m-d H:i:s"),
-            'tanggal_pembayaran_produk' => date("Y-m-d H:i:s"),
+            'tanggal_pembayaran_produk' => date("0000:00:0:00:00"),
             'diskon' => '0',
             'total_penjualan_produk' => '0',
-            'status_pembayaran' => 'Lunas',
+            'status_penjualan' => 'Belum Selesai',
+            'status_pembayaran' => 'Belum Lunas',
             'id_cs' => $this->post('id_cs'),
             'id_kasir' => $this->post('id_cs'),
             'created_date' => date("Y-m-d H:i:s"),
