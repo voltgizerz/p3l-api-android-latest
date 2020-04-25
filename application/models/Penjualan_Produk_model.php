@@ -29,25 +29,10 @@ class Penjualan_Produk_model extends CI_Model
         }
     }
 
-    public function deletePengadaanDetail($PengadaanDetail,$id)
+    public function deletePenjualanProduk($id,$kode)
     {
-        $this->db->delete('data_detail_pengadaan', ['id_detail_pengadaan' => $id]);
+        $this->db->delete('data_transaksi_penjualan_produk', ['id_transaksi_penjualan_produk' => $id]);
         $rowdelete = $this->db->affected_rows();
-        //CARI NILAI TOTAL HARGA UPDATE
-        $this->db->select('data_detail_pengadaan.id_produk_fk,data_detail_pengadaan.jumlah_pengadaan,data_produk.harga_produk');
-        $this->db->join('data_produk', 'data_produk.id_produk = data_detail_pengadaan.id_produk_fk');
-        $this->db->where('data_detail_pengadaan.kode_pengadaan_fk', $PengadaanDetail['kode_pengadaan_fk']);
-        $this->db->from('data_detail_pengadaan');
-        $query = $this->db->get();
-        $arrTemp = json_decode(json_encode($query->result()), true);
-        // NILAI TAMPUNG TOTAL HARGA YANG BARU
-        $temp = 0;
-        for ($i = 0; $i < count($arrTemp); $i++) {
-            $temp = $temp + $arrTemp[$i]['jumlah_pengadaan'] * $arrTemp[$i]['harga_produk'];
-        }
-        //UPDATE NILAI TOTAL PENGADAAN
-        $this->db->where('kode_pengadaan', $PengadaanDetail['kode_pengadaan_fk'])->update('data_pengadaan', ['total' => $temp]);
-
         return $rowdelete;
 
     }

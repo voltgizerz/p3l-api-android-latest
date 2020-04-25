@@ -11,7 +11,7 @@ class Delete extends REST_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Pengadaan_model');
+        $this->load->model('Penjualan_produk_model');
     }
     public function index_post($id)
     {
@@ -24,23 +24,23 @@ class Delete extends REST_Controller
 
             ], REST_Controller::HTTP_BAD_REQUEST);
         } else {
-            $kodePengadaan = [
-                'kode_pengadaan' => $this->post('kode_pengadaan'),
+            $kodePenjualanProduk = [
+                'kode_transaksi_penjualan_produk' => $this->post('kode_penjualan'),
             ];
-            if ($this->Pengadaan_model->deletePengadaan($id,$kodePengadaan) > 0) {
+            if ($this->Penjualan_produk_model->deletePenjualanProduk($id,$kodePenjualanProduk) > 0) {
                 //ok
 
                 $this->response([
                     'status' => true,
-                    'id_pengadaan' => $id,
-                    'message' => 'SUKSES DELETE PENGADAAN!',
+                    'id_transaksi_pejualan_produk' => $id,
+                    'message' => 'SUKSES DELETE PENJUALAN PRODUK!',
                 ], REST_Controller::HTTP_CREATED);
                 # code...
             } else {
                 ////id not found
                 $this->response([
                     'status' => false,
-                    'message' => 'GAGAL DELETE PENGADAAN ID TIDAK DITEMUKAN !',
+                    'message' => 'GAGAL DELETE PENJUALAN PRODUK ID TIDAK DITEMUKAN !',
 
                 ], REST_Controller::HTTP_BAD_REQUEST);
             }
