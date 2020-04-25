@@ -21,7 +21,7 @@ class Create extends REST_Controller
         date_default_timezone_set("Asia/Bangkok");
         $data = [
             'kode_transaksi_penjualan_produk' => $this->penjualan->ambilKode(),
-            'tanggal_penjualan_produk' => date("Y-m-d H:i:s"),
+            'tanggal_penjualan_produk' => date("0000:00:0:00:00"),
             'tanggal_pembayaran_produk' => date("0000:00:0:00:00"),
             'diskon' => '0',
             'total_penjualan_produk' => '0',

@@ -24,12 +24,12 @@ class Penjualan_Produk_model extends CI_Model
             # code...
         } else {
             $this->db->where('id_transaksi_penjualan_produk', $id);
-            
+
             return $this->db->get('data_transaksi_penjualan_produk')->result_array();
         }
     }
 
-    public function deletePenjualanProduk($id,$kode)
+    public function deletePenjualanProduk($id, $kode)
     {
         $this->db->delete('data_transaksi_penjualan_produk', ['id_transaksi_penjualan_produk' => $id]);
         $rowdelete = $this->db->affected_rows();
@@ -40,37 +40,24 @@ class Penjualan_Produk_model extends CI_Model
     {
         //MASUKAN DATA NYA BOS
         $this->db->insert('data_transaksi_penjualan_produk', $data);
-        
+
         return $this->db->affected_rows();
     }
 
-    public function updatePengadaanDetail($request, $id)
+    public function updatePenjualanProduk($request, $id)
     {
         $updateData =
-            ['id_produk_fk' => $request->id_produk_fk,
-            'satuan_pengadaan' => $request->satuan_pengadaan,
-            'jumlah_pengadaan' => $request->jumlah_pengadaan,
+            [
+            'tanggal_penjualan_produk' => $request->tanggal_penjualan_produk,
+            'status_penjualan' => $request->status_penjualan,
+            'updated_date' => $request->updated_date,
         ];
 
-        if ($this->db->where('id_detail_pengadaan', $id)->update('data_detail_pengadaan', $updateData)) {
-            //CARI NILAI TOTAL HARGA UPDATE
-            $this->db->select('data_detail_pengadaan.id_produk_fk,data_detail_pengadaan.jumlah_pengadaan,data_produk.harga_produk');
-            $this->db->join('data_produk', 'data_produk.id_produk = data_detail_pengadaan.id_produk_fk');
-            $this->db->where('data_detail_pengadaan.kode_pengadaan_fk', $request->kode_pengadaan_fk);
-            $this->db->from('data_detail_pengadaan');
-            $query = $this->db->get();
-            $arrTemp = json_decode(json_encode($query->result()), true);
-            // NILAI TAMPUNG TOTAL HARGA YANG BARU
-            $temp = 0;
-            for ($i = 0; $i < count($arrTemp); $i++) {
-                $temp = $temp + $arrTemp[$i]['jumlah_pengadaan'] * $arrTemp[$i]['harga_produk'];
-            }
-            //UPDATE NILAI TOTAL PENGADAAN
-            $this->db->where('kode_pengadaan', $request->kode_pengadaan_fk)->update('data_pengadaan', ['total' => $temp]);
-
-            return ['msg' => 'Berhasil Update pengadaan', 'error' => false];
+        if ($this->db->where('id_transaksi_penjualan_produk', $id)->update('data_transaksi_penjualan_produk', $updateData)) {
+            return ['msg' => 'Berhasil Update Penjualan Produk', 'error' => false];
         }
-        return ['msg' => 'Gagal Update pengadaan', 'error' => true];
+
+        return ['msg' => 'Gagal Update Penjualan Produk', 'error' => true];
     }
 
     public function getPengadaanID($id)

@@ -12,20 +12,21 @@ class Update extends REST_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Pengadaan_model');
+        $this->load->model('Penjualan_produk_model');
     }
 
     public function index_post($id = null)
     {
         date_default_timezone_set("Asia/Bangkok");
-        $pengadaan = new UserData();
-        $pengadaan->id_supplier = $this->post('id_supplier');
-        $pengadaan->status = $this->post('status');
-        $kodePengadaan = [
-            'kode_pengadaan_fk' => $this->post('kode_pengadaan_fk'),
+        $penjualan = new UserData();
+        $penjualan->tanggal_penjualan_produk = date("Y-m-d H:i:s");
+        $penjualan->status_penjualan = $this->post('status_penjualan');
+        $penjualan->updated_date = date("Y-m-d H:i:s");
+        $kodePenjualan = [
+            'kode_transaksi_penjualan_produk' => $this->post('kode_transaksi_penjualan_produk'),
         ];
 
-        $response = $this->Pengadaan_model->updatePengadaan($pengadaan, $id,$kodePengadaan);
+        $response = $this->Penjualan_produk_model->updatePenjualanProduk($penjualan, $id,$kodePenjualan);
 
         return $this->returnData($response['msg'], $response['error']);
     }
