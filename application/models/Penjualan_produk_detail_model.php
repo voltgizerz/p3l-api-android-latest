@@ -53,7 +53,7 @@ class Penjualan_Produk_Detail_model extends CI_Model
         
         $this->db->insert('data_detail_penjualan_produk', $data);
         $rowcreate = $this->db->affected_rows();
-         //CARI NILAI TOTAL HARGA UPDATE
+         //CARI NILAI SUBTOTAL PRODUK DETAIL HARGA UPDATE
          $this->db->select('data_detail_penjualan_produk.id_produk_penjualan_fk,data_detail_penjualan_produk.jumlah_produk,data_produk.harga_produk');
          $this->db->join('data_produk', 'data_produk.id_produk = data_detail_penjualan_produk.id_produk_penjualan_fk');
          $this->db->where('data_detail_penjualan_produk.subtotal', '0');
@@ -61,11 +61,24 @@ class Penjualan_Produk_Detail_model extends CI_Model
          $query = $this->db->get();
          $arrTemp = json_decode(json_encode($query->result()), true);
          
-        // NILAI TAMPUNG SUB TOTAL HARGA YANG BARU
+        // NILAI TAMPUNG SUB TOTAL  DETAIL PENJUALAN HARGA YANG BARU
             $temp = $arrTemp[0]['jumlah_produk'] * $arrTemp[0]['harga_produk'];
         //UPDATE NILAI TOTAL PENGADAAN
         $this->db->where('subtotal', '0')->update('data_detail_penjualan_produk', ['subtotal' => $temp]);
 
+         //CARI NILAI TOTAL HARGA UPDATE
+         $this->db->select('data_detail_penjualan_produk.id_produk_penjualan_fk,data_detail_penjualan_produk.jumlah_produk,data_produk.harga_produk');
+         $this->db->join('data_produk', 'data_produk.id_produk = data_detail_penjualan_produk.id_produk_penjualan_fk');
+         $this->db->where('data_detail_penjualan_produk.kode_transaksi_penjualan_produk_fk', $data['kode_transaksi_penjualan_produk_fk']);
+         $this->db->from('data_detail_penjualan_produk');
+         $query = $this->db->get();
+         $arrTemp = json_decode(json_encode($query->result()), true);
+         
+        // NILAI TAMPUNG TOTAL HARGA PENJUALAN YANG BARU
+            $temp = $arrTemp[0]['jumlah_produk'] * $arrTemp[0]['harga_produk'];
+        //UPDATE NILAI TOTAL PENGADAAN
+        $this->db->where('kode_transaksi_penjualan_produk', $data['kode_transaksi_penjualan_produk_fk'])->update('data_transaksi_penjualan_produk', ['total_penjualan_produk' => $temp]);
+        
         return $rowcreate;
     }
 
