@@ -30,7 +30,7 @@ class Penjualan_Produk_Detail_model extends CI_Model
         //CARI NILAI TOTAL HARGA UPDATE
         $this->db->select('data_detail_penjualan_produk.id_produk_penjualan_fk,data_detail_penjualan_produk.jumlah_produk,data_produk.harga_produk');
         $this->db->join('data_produk', 'data_produk.id_produk = data_detail_penjualan_produk.id_produk_penjualan_fk');
-        $this->db->where('data_detail_penjualan_produk.kode_pengadaan_fk', $kode['kode_transaksi_penjualan_produk_fk']);
+        $this->db->where('data_detail_penjualan_produk.kode_transaksi_penjualan_produk_fk', $kode['kode_transaksi_penjualan_produk_fk']);
         $this->db->from('data_detail_penjualan_produk');
         $query = $this->db->get();
         $arrTemp = json_decode(json_encode($query->result()), true);

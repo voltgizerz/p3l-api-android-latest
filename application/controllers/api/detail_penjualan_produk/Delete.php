@@ -25,9 +25,9 @@ class Delete extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST);
         } else {
             $kodePenjualanProduk = [
-                'kode_transaksi_penjualan_produk_fk' => $this->post('kode_transaksi_penjualan_produk'),
+                'kode_transaksi_penjualan_produk_fk' => $this->post('kode_transaksi_penjualan_produk_fk'),
             ];
-            if ($this->Penjualan_produk_detail_model->deletePenjualanProduk($id,$kodePenjualanProduk) > 0) {
+            if ($this->penjualan->deletePenjualanProduk($id,$kodePenjualanProduk) > 0) {
                 //ok
 
                 $this->response([
