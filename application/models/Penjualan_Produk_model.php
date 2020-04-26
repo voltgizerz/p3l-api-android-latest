@@ -36,6 +36,7 @@ class Penjualan_Produk_model extends CI_Model
         return $rowdelete;
 
     }
+    
     public function createPenjualan($data)
     {
         //MASUKAN DATA NYA BOS
