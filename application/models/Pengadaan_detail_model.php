@@ -68,6 +68,7 @@ class Pengadaan_detail_model extends CI_Model
 
     public function updatePengadaanDetail($request, $id)
     {
+        date_default_timezone_set("Asia/Bangkok");
         $updateData =
             ['id_produk_fk' => $request->id_produk_fk,
             'satuan_pengadaan' => $request->satuan_pengadaan,
@@ -88,7 +89,7 @@ class Pengadaan_detail_model extends CI_Model
                 $temp = $temp + $arrTemp[$i]['jumlah_pengadaan'] * $arrTemp[$i]['harga_produk'];
             }
             //UPDATE NILAI TOTAL PENGADAAN
-            $this->db->where('kode_pengadaan', $request->kode_pengadaan_fk)->update('data_pengadaan', ['total' => $temp]);
+            $this->db->where('kode_pengadaan', $request->kode_pengadaan_fk)->update('data_pengadaan', ['total' => $temp,'updated_date' =>date("Y-m-d H:i:s")]);
 
             return ['msg' => 'Berhasil Update pengadaan', 'error' => false];
         }

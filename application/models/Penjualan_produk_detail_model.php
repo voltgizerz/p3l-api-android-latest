@@ -26,7 +26,7 @@ class Penjualan_Produk_Detail_model extends CI_Model
     {
         $this->db->delete('data_detail_penjualan_produk', ['id_detail_penjualan_produk' => $id]);
         $rowdelete = $this->db->affected_rows();
-        
+
         //CARI NILAI TOTAL HARGA UPDATE
         $this->db->select('data_detail_penjualan_produk.id_produk_penjualan_fk,data_detail_penjualan_produk.jumlah_produk,data_produk.harga_produk');
         $this->db->join('data_produk', 'data_produk.id_produk = data_detail_penjualan_produk.id_produk_penjualan_fk');
@@ -34,7 +34,7 @@ class Penjualan_Produk_Detail_model extends CI_Model
         $this->db->from('data_detail_penjualan_produk');
         $query = $this->db->get();
         $arrTemp = json_decode(json_encode($query->result()), true);
-        
+
         // NILAI TAMPUNG TOTAL HARGA YANG BARU
         $temp = 0;
         for ($i = 0; $i < count($arrTemp); $i++) {
@@ -46,52 +46,84 @@ class Penjualan_Produk_Detail_model extends CI_Model
         return $rowdelete;
 
     }
-    
+
     public function createPenjualanProdukDetail($data)
     {
         //MASUKAN DATA NYA BOS
-        
+
         $this->db->insert('data_detail_penjualan_produk', $data);
         $rowcreate = $this->db->affected_rows();
-         //CARI NILAI SUBTOTAL PRODUK DETAIL HARGA UPDATE
-         $this->db->select('data_detail_penjualan_produk.id_produk_penjualan_fk,data_detail_penjualan_produk.jumlah_produk,data_produk.harga_produk');
-         $this->db->join('data_produk', 'data_produk.id_produk = data_detail_penjualan_produk.id_produk_penjualan_fk');
-         $this->db->where('data_detail_penjualan_produk.subtotal', '0');
-         $this->db->from('data_detail_penjualan_produk');
-         $query = $this->db->get();
-         $arrTemp = json_decode(json_encode($query->result()), true);
-         
+        //CARI NILAI SUBTOTAL PRODUK DETAIL HARGA UPDATE
+        $this->db->select('data_detail_penjualan_produk.id_produk_penjualan_fk,data_detail_penjualan_produk.jumlah_produk,data_produk.harga_produk');
+        $this->db->join('data_produk', 'data_produk.id_produk = data_detail_penjualan_produk.id_produk_penjualan_fk');
+        $this->db->where('data_detail_penjualan_produk.subtotal', '0');
+        $this->db->from('data_detail_penjualan_produk');
+        $query = $this->db->get();
+        $arrTemp = json_decode(json_encode($query->result()), true);
+
         // NILAI TAMPUNG SUB TOTAL  DETAIL PENJUALAN HARGA YANG BARU
-            $temp = $arrTemp[0]['jumlah_produk'] * $arrTemp[0]['harga_produk'];
+        $temp = $arrTemp[0]['jumlah_produk'] * $arrTemp[0]['harga_produk'];
         //UPDATE NILAI TOTAL PENGADAAN
         $this->db->where('subtotal', '0')->update('data_detail_penjualan_produk', ['subtotal' => $temp]);
 
-         //CARI NILAI TOTAL HARGA UPDATE
-         $this->db->select('data_detail_penjualan_produk.id_produk_penjualan_fk,data_detail_penjualan_produk.jumlah_produk,data_produk.harga_produk');
-         $this->db->join('data_produk', 'data_produk.id_produk = data_detail_penjualan_produk.id_produk_penjualan_fk');
-         $this->db->where('data_detail_penjualan_produk.kode_transaksi_penjualan_produk_fk', $data['kode_transaksi_penjualan_produk_fk']);
-         $this->db->from('data_detail_penjualan_produk');
-         $query = $this->db->get();
-         $arrTemp = json_decode(json_encode($query->result()), true);
-         
+        //CARI NILAI TOTAL HARGA UPDATE
+        $this->db->select('data_detail_penjualan_produk.id_produk_penjualan_fk,data_detail_penjualan_produk.jumlah_produk,data_produk.harga_produk');
+        $this->db->join('data_produk', 'data_produk.id_produk = data_detail_penjualan_produk.id_produk_penjualan_fk');
+        $this->db->where('data_detail_penjualan_produk.kode_transaksi_penjualan_produk_fk', $data['kode_transaksi_penjualan_produk_fk']);
+        $this->db->from('data_detail_penjualan_produk');
+        $query = $this->db->get();
+        $arrTemp = json_decode(json_encode($query->result()), true);
+
         // NILAI TAMPUNG TOTAL HARGA PENJUALAN YANG BARU
-            $temp = $arrTemp[0]['jumlah_produk'] * $arrTemp[0]['harga_produk'];
+        $temp = 0;
+        for ($i = 0; $i < count($arrTemp); $i++) {
+            $temp = $temp + $arrTemp[$i]['jumlah_produk'] * $arrTemp[$i]['harga_produk'];
+        }
         //UPDATE NILAI TOTAL PENGADAAN
         $this->db->where('kode_transaksi_penjualan_produk', $data['kode_transaksi_penjualan_produk_fk'])->update('data_transaksi_penjualan_produk', ['total_penjualan_produk' => $temp]);
-        
+
         return $rowcreate;
     }
 
-    public function updatePenjualanProduk($request, $id)
+    public function updatePenjualanProdukDetail($request, $id)
     {
         $updateData =
             [
-            'tanggal_penjualan_produk' => $request->tanggal_penjualan_produk,
-            'status_penjualan' => $request->status_penjualan,
-            'updated_date' => $request->updated_date,
+            'kode_transaksi_penjualan_produk_fk' => $request->kode_transaksi_penjualan_produk_fk,
+            'id_produk_penjualan_fk' => $request->id_produk_penjualan_fk,
+            'jumlah_produk' => $request->jumlah_produk,
         ];
 
-        if ($this->db->where('id_transaksi_penjualan_produk', $id)->update('data_transaksi_penjualan_produk', $updateData)) {
+        if ($this->db->where('id_detail_penjualan_produk', $id)->update('data_detail_penjualan_produk', $updateData)) {
+            //CARI NILAI TOTAL HARGA UPDATE
+            $this->db->select('data_detail_penjualan_produk.id_produk_penjualan_fk,data_detail_penjualan_produk.jumlah_produk,data_produk.harga_produk');
+            $this->db->join('data_produk', 'data_produk.id_produk = data_detail_penjualan_produk.id_produk_penjualan_fk');
+            $this->db->where('data_detail_penjualan_produk.kode_transaksi_penjualan_produk_fk', $updateData['kode_transaksi_penjualan_produk_fk']);
+            $this->db->from('data_detail_penjualan_produk');
+            $query = $this->db->get();
+            $arrTemp = json_decode(json_encode($query->result()), true);
+
+            // NILAI TAMPUNG TOTAL HARGA PENJUALAN YANG BARU
+            $temp = 0;
+            for ($i = 0; $i < count($arrTemp); $i++) {
+                $temp = $temp + $arrTemp[$i]['jumlah_produk'] * $arrTemp[$i]['harga_produk'];
+            }
+            //UPDATE NILAI TOTAL PENGADAAN
+            $this->db->where('kode_transaksi_penjualan_produk', $updateData['kode_transaksi_penjualan_produk_fk'])->update('data_transaksi_penjualan_produk', ['total_penjualan_produk' => $temp,'updated_date' =>date("Y-m-d H:i:s")]);
+
+            //CARI NILAI SUBTOTAL PRODUK DETAIL HARGA UPDATE
+            $this->db->select('data_detail_penjualan_produk.id_produk_penjualan_fk,data_detail_penjualan_produk.jumlah_produk,data_produk.harga_produk');
+            $this->db->join('data_produk', 'data_produk.id_produk = data_detail_penjualan_produk.id_produk_penjualan_fk');
+            $this->db->where('data_detail_penjualan_produk.id_detail_penjualan_produk', $id);
+            $this->db->from('data_detail_penjualan_produk');
+            $query = $this->db->get();
+            $arrTemp = json_decode(json_encode($query->result()), true);
+
+            // NILAI TAMPUNG SUB TOTAL  DETAIL PENJUALAN HARGA YANG BARU
+            $temp = $arrTemp[0]['jumlah_produk'] * $arrTemp[0]['harga_produk'];
+            //UPDATE NILAI TOTAL PENGADAAN
+            $this->db->where('id_detail_penjualan_produk', $id)->update('data_detail_penjualan_produk', ['subtotal' => $temp]);
+
             return ['msg' => 'Berhasil Update Penjualan Produk', 'error' => false];
         }
 
