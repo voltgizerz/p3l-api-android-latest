@@ -31,6 +31,7 @@ class Penjualan_Produk_model extends CI_Model
 
     public function deletePenjualanProduk($id, $kode)
     {
+        $this->db->delete('data_detail_penjualan_produk', ['kode_transaksi_penjualan_produk_fk' => $kode['kode_transaksi_penjualan_produk']]);
         $this->db->delete('data_transaksi_penjualan_produk', ['id_transaksi_penjualan_produk' => $id]);
         $rowdelete = $this->db->affected_rows();
         return $rowdelete;
