@@ -7,7 +7,7 @@ class Pengadaan_detail_model extends CI_Model
     {
         if ($id === null) {
 
-            $this->db->select('data_detail_pengadaan.id_detail_pengadaan,data_detail_pengadaan.id_produk_fk,data_produk.nama_produk,data_detail_pengadaan.kode_pengadaan_fk,data_detail_pengadaan.satuan_pengadaan,data_detail_pengadaan.jumlah_pengadaan,data_detail_pengadaan.tanggal_pengadaan');
+            $this->db->select('data_detail_pengadaan.id_detail_pengadaan,data_detail_pengadaan.id_produk_fk,data_produk.nama_produk,data_produk.gambar_produk,data_detail_pengadaan.kode_pengadaan_fk,data_detail_pengadaan.satuan_pengadaan,data_detail_pengadaan.jumlah_pengadaan,data_detail_pengadaan.tanggal_pengadaan');
             $this->db->join('data_produk', 'data_produk.id_produk = data_detail_pengadaan.id_produk_fk');
             $this->db->from('data_detail_pengadaan');
             $query = $this->db->get();
