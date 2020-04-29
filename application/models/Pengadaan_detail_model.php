@@ -61,7 +61,7 @@ class Pengadaan_detail_model extends CI_Model
             $temp = $temp + $arrTemp[$i]['jumlah_pengadaan'] * $arrTemp[$i]['harga_produk'];
         }
         //UPDATE NILAI TOTAL PENGADAAN
-        $this->db->where('kode_pengadaan', $data['kode_pengadaan_fk'])->update('data_pengadaan', ['total' => $temp]);
+        $this->db->where('kode_pengadaan', $data['kode_pengadaan_fk'])->update('data_pengadaan', ['total' => $temp,'updated_date' =>date("Y-m-d H:i:s")]);
 
         return $this->db->affected_rows();
     }
