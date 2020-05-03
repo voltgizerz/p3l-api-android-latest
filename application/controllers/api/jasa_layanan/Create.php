@@ -31,8 +31,10 @@ class Create extends REST_Controller
 
          // check layanan
          $layanan = $this->post('nama_jasa_layanan');
+         $ukuran =$this->post('id_ukuran_hewan');
+         $jenis = $this->post('id_jenis_hewan');
 
-         $query = "SELECT nama_jasa_layanan FROM data_jasa_layanan WHERE nama_jasa_layanan = '$layanan'";
+         $query = "SELECT nama_jasa_layanan FROM data_jasa_layanan WHERE nama_jasa_layanan = '$layanan' AND id_jenis_hewan = '$jenis' AND id_ukuran_hewan = '$ukuran' ";
          $result = $this->db->query($query, $layanan);
 
         if ($result->num_rows() >= 1) {
