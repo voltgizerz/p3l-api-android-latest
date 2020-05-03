@@ -93,7 +93,7 @@ class Jasa_Layanan_model extends CI_Model
             'deleted_date' => $request->deleted_date,
         ];
 
-        $cekID = $this->db->query("SELECT nama_jasa_layanan FROM data_jasa_layanan WHERE nama_jasa_layanan ='$request->nama_jasa_layanan' && id_jasa_layanan != '$id'");
+        $cekID = $this->db->query("SELECT nama_jasa_layanan FROM data_jasa_layanan WHERE nama_jasa_layanan ='$request->nama_jasa_layanan' && id_jenis_hewan ='$request->id_jenis_hewan' && id_ukuran_hewan ='$request->id_ukuran_hewan' && id_jasa_layanan != '$id'");
 
         if ($cekID->num_rows() >= 1) {
             //JENIS HEWAN SUDAH TERDAFTAR
