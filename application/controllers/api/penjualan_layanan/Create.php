@@ -26,6 +26,7 @@ class Create extends REST_Controller
             'id_hewan'=>$this->post('id_hewan'),
             'diskon' => '0',
             'total_penjualan_jasa_layanan' => '0',
+            'status_layanan' => 'Belum Selesai',
             'status_penjualan' => 'Belum Selesai',
             'status_pembayaran' => 'Belum Lunas',
             'id_cs' => $this->post('id_cs'),

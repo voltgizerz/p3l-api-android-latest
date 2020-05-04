@@ -22,7 +22,6 @@ class Update extends REST_Controller
         $pengadaan->id_supplier = $this->post('id_supplier');
         $pengadaan->status = $this->post('status');
         $pengadaan->updated_date = date("Y-m-d H:i:s");
-        $pengadaan->tanggal_pengadaan = date("Y-m-d H:i:s");
         $kodePengadaan = [
             'kode_pengadaan_fk' => $this->post('kode_pengadaan_fk'),
         ];

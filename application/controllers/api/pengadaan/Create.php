@@ -23,7 +23,7 @@ class Create extends REST_Controller
             'kode_pengadaan' => $this->pengadaan->ambilKode(),
             'id_supplier' => $this->post('id_supplier'),
             'status' => ('Belum Diterima'),
-            'tanggal_pengadaan' => date("0000:00:0:00:00"),
+            'tanggal_pengadaan' => date("Y-m-d H:i:s"),
             'created_date' => date("Y-m-d H:i:s"),
             'updated_date' => date("0000:00:0:00:00"),
             'total' => $this->pengadaan->totalBayarPengadaan($this->pengadaan->ambilKode()),

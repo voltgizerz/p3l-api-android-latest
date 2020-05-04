@@ -57,20 +57,21 @@ class Penjualan_Layanan_model extends CI_Model
         return $this->db->affected_rows();
     }
 
-    public function updatePenjualanProduk($request, $id)
+    public function updatePenjualanLayanan($request, $id)
     {
         $updateData =
             [
-            'tanggal_penjualan_produk' => $request->tanggal_penjualan_produk,
+            'tanggal_penjualan_jasa_layanan' => $request->tanggal_penjualan_jasa_layanan,
             'status_penjualan' => $request->status_penjualan,
+            'id_hewan'=> $request->id_hewan,
             'updated_date' => $request->updated_date,
         ];
 
-        if ($this->db->where('id_transaksi_penjualan_produk', $id)->update('data_transaksi_penjualan_produk', $updateData)) {
-            return ['msg' => 'Berhasil Update Penjualan Produk', 'error' => false];
+        if ($this->db->where('id_transaksi_penjualan_jasa_layanan', $id)->update('data_transaksi_penjualan_jasa_layanan', $updateData)) {
+            return ['msg' => 'Berhasil Update Penjualan Jasa Layanan', 'error' => false];
         }
 
-        return ['msg' => 'Gagal Update Penjualan Produk', 'error' => true];
+        return ['msg' => 'Gagal Update Penjualan Jasa Layanan', 'error' => true];
     }
 
     public function getPengadaanID($id)

@@ -80,7 +80,7 @@ class Penjualan_Produk_Detail_model extends CI_Model
             $temp = $temp + $arrTemp[$i]['jumlah_produk'] * $arrTemp[$i]['harga_produk'];
         }
         //UPDATE NILAI TOTAL PENGADAAN
-        $this->db->where('kode_transaksi_penjualan_produk', $data['kode_transaksi_penjualan_produk_fk'])->update('data_transaksi_penjualan_produk', ['total_penjualan_produk' => $temp]);
+        $this->db->where('kode_transaksi_penjualan_produk', $data['kode_transaksi_penjualan_produk_fk'])->update('data_transaksi_penjualan_produk', ['total_penjualan_produk' => $temp,'updated_date' =>date("Y-m-d H:i:s")]);
 
         return $rowcreate;
     }
