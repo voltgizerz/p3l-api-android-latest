@@ -33,6 +33,9 @@ class Pengadaan_detail_model extends CI_Model
         $this->db->from('data_detail_pengadaan');
         $query = $this->db->get();
         $arrTemp = json_decode(json_encode($query->result()), true);
+        
+        $this->db->where('kode_pengadaan', $PengadaanDetail['kode_pengadaan_fk'])->update('data_pengadaan', ['updated_date' =>date("Y-m-d H:i:s")]);
+
         // NILAI TAMPUNG TOTAL HARGA YANG BARU
         $temp = 0;
         for ($i = 0; $i < count($arrTemp); $i++) {
