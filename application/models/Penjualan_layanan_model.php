@@ -52,7 +52,7 @@ class Penjualan_Layanan_model extends CI_Model
     public function createPenjualan($data)
     {
         //MASUKAN DATA NYA BOS
-        $this->db->insert('data_transaksi_penjualan_produk', $data);
+        $this->db->insert('data_transaksi_penjualan_jasa_layanan', $data);
 
         return $this->db->affected_rows();
     }
@@ -88,15 +88,15 @@ class Penjualan_Layanan_model extends CI_Model
     public function ambilKode()
     {
         date_default_timezone_set("Asia/Bangkok");
-        $query = "SHOW TABLE STATUS LIKE 'data_transaksi_penjualan_produk'";
+        $query = "SHOW TABLE STATUS LIKE 'data_transaksi_penjualan_jasa_layanan'";
         $result = $this->db->query($query)->result();
         $hari = date('d');
         $bln = date('m');
         $thn = date('y');
         if ($result[0]->Auto_increment > 9) {
-            return ("PR-" . $hari . $bln . $thn . "-" . $result[0]->Auto_increment);
+            return ("LY-" . $hari . $bln . $thn . "-" . $result[0]->Auto_increment);
         } else {
-            return ("PR-" . $hari . $bln . $thn . "-0" . $result[0]->Auto_increment);
+            return ("LY-" . $hari . $bln . $thn . "-0" . $result[0]->Auto_increment);
         }
     }
 
