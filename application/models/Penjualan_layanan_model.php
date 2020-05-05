@@ -40,10 +40,10 @@ class Penjualan_Layanan_model extends CI_Model
         }
     }
 
-    public function deletePenjualanProduk($id, $kode)
+    public function deletePenjualanLayanan($id, $kode)
     {
-        $this->db->delete('data_detail_penjualan_produk', ['kode_transaksi_penjualan_produk_fk' => $kode['kode_transaksi_penjualan_produk']]);
-        $this->db->delete('data_transaksi_penjualan_produk', ['id_transaksi_penjualan_produk' => $id]);
+        $this->db->delete('data_detail_penjualan_jasa_layanan', ['kode_transaksi_penjualan_jasa_layanan_fk' => $kode['kode_transaksi_penjualan_jasa_layanan']]);
+        $this->db->delete('data_transaksi_penjualan_jasa_layanan', ['id_transaksi_penjualan_jasa_layanan' => $id]);
         $rowdelete = $this->db->affected_rows();
         return $rowdelete;
 
