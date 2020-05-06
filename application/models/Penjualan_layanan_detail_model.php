@@ -31,12 +31,12 @@ class Penjualan_Layanan_Detail_model extends CI_Model
             # code...
         } else {
 
-            $this->db->where('id_detail_penjualan_produk', $id);
-            return $this->db->get('data_detail_penjualan_produk')->result_array();
+            $this->db->where('id_detail_penjualan_jasa_layanan', $id);
+            return $this->db->get('data_detail_penjualan_jasa_layanan')->result_array();
         }
     }
 
-    public function deletePenjualanProduk($id, $kode)
+    public function deletePenjualanLayanan($id, $kode)
     {
         $this->db->delete('data_detail_penjualan_produk', ['id_detail_penjualan_produk' => $id]);
         $rowdelete = $this->db->affected_rows();
