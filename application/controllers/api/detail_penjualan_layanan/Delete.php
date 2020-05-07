@@ -11,7 +11,7 @@ class Delete extends REST_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Penjualan_produk_detail_model', 'penjualan');
+        $this->load->model('Penjualan_layanan_detail_model', 'penjualan');
     }
     public function index_post($id)
     {

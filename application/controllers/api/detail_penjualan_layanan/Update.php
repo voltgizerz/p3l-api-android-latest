@@ -12,7 +12,7 @@ class Update extends REST_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Penjualan_produk_detail_model');
+        $this->load->model('Penjualan_layanan_detail_model');
     }
 
     public function index_post($id = null)

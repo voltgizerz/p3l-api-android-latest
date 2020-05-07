@@ -48,11 +48,11 @@ class Penjualan_Produk_Detail_model extends CI_Model
 
     }
 
-    public function createPenjualanProdukDetail($data)
+    public function createPenjualanLayananDetail($data)
     {
         //MASUKAN DATA NYA BOS
 
-        $this->db->insert('data_detail_penjualan_produk', $data);
+        $this->db->insert('data_detail_penjualan_jasa_layanan', $data);
         $rowcreate = $this->db->affected_rows();
         //CARI NILAI SUBTOTAL PRODUK DETAIL HARGA UPDATE
         $this->db->select('data_detail_penjualan_produk.id_produk_penjualan_fk,data_detail_penjualan_produk.jumlah_produk,data_produk.harga_produk');
