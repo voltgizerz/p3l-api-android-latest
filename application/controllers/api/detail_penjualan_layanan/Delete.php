@@ -24,23 +24,23 @@ class Delete extends REST_Controller
 
             ], REST_Controller::HTTP_BAD_REQUEST);
         } else {
-            $kodePenjualanProduk = [
-                'kode_transaksi_penjualan_produk_fk' => $this->post('kode_transaksi_penjualan_produk_fk'),
+            $kodePenjualanLayanan = [
+                'kode_transaksi_penjualan_jasa_layanan_fk' => $this->post('kode_transaksi_penjualan_jasa_layanan_fk'),
             ];
-            if ($this->penjualan->deletePenjualanProduk($id,$kodePenjualanProduk) > 0) {
+            if ($this->penjualan->deletePenjualanLayanan($id,$kodePenjualanLayanan) > 0) {
                 //ok
 
                 $this->response([
                     'status' => true,
-                    'id_transaksi_penjualan_produk_detail' => $id,
-                    'message' => 'SUKSES DELETE PENJUALAN PRODUK DETAIL!',
+                    'id_transaksi_penjualan_jasa_layanan_detail' => $id,
+                    'message' => 'SUKSES DELETE PENJUALAN LAYANAN DETAIL!',
                 ], REST_Controller::HTTP_CREATED);
                 # code...
             } else {
                 ////id not found
                 $this->response([
                     'status' => false,
-                    'message' => 'GAGAL DELETE PENJUALAN PRODUK DETAIL ID TIDAK DITEMUKAN !',
+                    'message' => 'GAGAL DELETE PENJUALAN LAYANAN DETAIL ID TIDAK DITEMUKAN !',
 
                 ], REST_Controller::HTTP_BAD_REQUEST);
             }
