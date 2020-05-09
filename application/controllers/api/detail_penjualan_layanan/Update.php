@@ -18,13 +18,12 @@ class Update extends REST_Controller
     public function index_post($id = null)
     {
         date_default_timezone_set("Asia/Bangkok");
-        $penjualanProdukDetail = new UserData();
-        $penjualanProdukDetail->id_produk_penjualan_fk = $this->post('id_produk_penjualan_fk');
-        $penjualanProdukDetail->kode_transaksi_penjualan_produk_fk = $this->post('kode_transaksi_penjualan_produk_fk');
-        $penjualanProdukDetail->jumlah_produk = $this->post('jumlah_produk');
-        $penjualanProdukDetail->subtotal = $this->post('subtotal');
+        $penjualanLayananDetail = new UserData();
+        $penjualanLayananDetail->id_jasa_layanan_fk = $this->post('id_jasa_layanan_fk');
+        $penjualanLayananDetail->kode_transaksi_penjualan_jasa_layanan_fk = $this->post('kode_transaksi_penjualan_jasa_layanan_fk');
+        $penjualanLayananDetail->jumlah_jasa_layanan = $this->post('jumlah_jasa_layanan');
 
-        $response = $this->Penjualan_produk_detail_model->updatePenjualanProdukDetail($penjualanProdukDetail, $id);
+        $response = $this->Penjualan_layanan_detail_model->updatePenjualanLayananDetail( $penjualanLayananDetail, $id);
 
         return $this->returnData($response['msg'], $response['error']);
     }
