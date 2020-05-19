@@ -76,7 +76,6 @@ class Penjualan_Layanan_Detail_model extends CI_Model
         $this->db->from('data_detail_penjualan_jasa_layanan');
         $query = $this->db->get();
         $arrTemp = json_decode(json_encode($query->result()), true);
-        var_dump($arrTemp);
         // NILAI TAMPUNG SUB TOTAL  DETAIL PENJUALAN HARGA YANG BARU
         $temp = $arrTemp[0]['jumlah_jasa_layanan'] * $arrTemp[0]['harga_jasa_layanan'];
         //UPDATE NILAI TOTAL PENJUALAN LAYANAN
