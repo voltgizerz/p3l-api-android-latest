@@ -21,6 +21,7 @@ class Update extends REST_Controller
         $penjualan = new UserData();
         $penjualan->tanggal_penjualan_jasa_layanan = date("Y-m-d H:i:s");
         $penjualan->status_penjualan = $this->post('status_penjualan');
+        $penjualan->status_layanan = $this->post('status_layanan');
         $penjualan->id_hewan = $this->post('id_hewan');
         $penjualan->updated_date = date("Y-m-d H:i:s");
         $kodePenjualan = [

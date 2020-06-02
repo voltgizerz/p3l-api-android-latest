@@ -20,12 +20,13 @@ class Update extends REST_Controller
         date_default_timezone_set("Asia/Bangkok");
         $penjualan = new UserData();
         $penjualan->tanggal_penjualan_produk = date("Y-m-d H:i:s");
+        $penjualan->id_hewan = $this->post('id_hewan');
         $penjualan->status_penjualan = $this->post('status_penjualan');
         $penjualan->updated_date = date("Y-m-d H:i:s");
         $kodePenjualan = [
             'kode_transaksi_penjualan_produk' => $this->post('kode_transaksi_penjualan_produk'),
         ];
-
+        
         $response = $this->Penjualan_produk_model->updatePenjualanProduk($penjualan, $id);
         return $this->returnData($response['msg'], $response['error']);
     }

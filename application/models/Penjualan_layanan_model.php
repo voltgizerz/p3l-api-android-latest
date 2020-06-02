@@ -63,6 +63,7 @@ class Penjualan_Layanan_model extends CI_Model
             [
             'tanggal_penjualan_jasa_layanan' => $request->tanggal_penjualan_jasa_layanan,
             'status_penjualan' => $request->status_penjualan,
+            'status_layanan' => $request->status_layanan,
             'id_hewan'=> $request->id_hewan,
             'updated_date' => $request->updated_date,
         ];

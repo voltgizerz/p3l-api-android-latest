@@ -37,7 +37,7 @@ class Penjualan_Produk_model extends CI_Model
         return $rowdelete;
 
     }
-    
+
     public function createPenjualan($data)
     {
         //MASUKAN DATA NYA BOS
@@ -52,6 +52,7 @@ class Penjualan_Produk_model extends CI_Model
             [
             'tanggal_penjualan_produk' => $request->tanggal_penjualan_produk,
             'status_penjualan' => $request->status_penjualan,
+            'id_hewan'=>$request->id_hewan,
             'updated_date' => $request->updated_date,
         ];
 

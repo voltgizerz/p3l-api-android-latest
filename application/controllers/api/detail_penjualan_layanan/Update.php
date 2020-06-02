@@ -22,7 +22,6 @@ class Update extends REST_Controller
         $penjualanLayananDetail->id_jasa_layanan_fk = $this->post('id_jasa_layanan_fk');
         $penjualanLayananDetail->kode_transaksi_penjualan_jasa_layanan_fk = $this->post('kode_transaksi_penjualan_jasa_layanan_fk');
         $penjualanLayananDetail->jumlah_jasa_layanan = $this->post('jumlah_jasa_layanan');
-
         $response = $this->Penjualan_layanan_detail_model->updatePenjualanLayananDetail( $penjualanLayananDetail, $id);
 
         return $this->returnData($response['msg'], $response['error']);
